@@ -1,0 +1,8 @@
+{
+  "name": "Remix BAKUWIRA: Misi Penyelamat Bahasa",
+  "description": "Permainan RPG 3D pengembaraan bahasa Melayu bagi memulihkan kekeliruan bahasa rojak melalui penerokaan, perbualan NPC, cabaran penulisan dan pengucapan berlandaskan Kurikulum Bahasa Melayu Tahap 2.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

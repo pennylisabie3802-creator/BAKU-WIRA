@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@keyframes breathe-subtle {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.008);
+  }
+}
+
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-150%) skewX(-25deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  60%, 100% {
+    transform: translateX(250%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.4), inset 0 0 10px rgba(254, 240, 138, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(234, 179, 8, 0.8), inset 0 0 20px rgba(254, 240, 138, 0.6);
+  }
+}
+
+.animate-breathe {
+  animation: breathe-subtle 7s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer-slide 4.5s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2.5s ease-in-out infinite;
+}
+
+@keyframes bounce-horizontal {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes phone-rotate {
+  0%, 15% {
+    transform: rotate(0deg);
+  }
+  45%, 70% {
+    transform: rotate(-90deg);
+  }
+  90%, 100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-phone-rotate {
+  animation: phone-rotate 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes reverse-spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-reverse-spin {
+  animation: reverse-spin 12s linear infinite;
+}
+
+/* 2D Anime Character Non-Destructive Animation Utilities */
+@keyframes anime-blink {
+  0%, 92%, 100% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  94%, 96% {
+    transform: scaleY(1);
+    opacity: 0.9;
+  }
+  98% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes anime-breathe-2d {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-2.5px) scale(1.005);
+  }
+}
+
+@keyframes hair-breeze-sway {
+  0%, 100% {
+    transform: rotate(0deg) translateX(0px);
+  }
+  50% {
+    transform: rotate(0.6deg) translateX(2px);
+  }
+}
+
+@keyframes ribbon-flutter {
+  0%, 100% {
+    transform: skewX(0deg) translateY(0px);
+  }
+  50% {
+    transform: skewX(-1.5deg) translateY(-2px);
+  }
+}
+
+@keyframes magic-sparkle-rise {
+  0% {
+    transform: translateY(12px) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-28px) scale(1.1) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes arcane-sigil-pulse {
+  0%, 100% {
+    transform: scale(0.95) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.08) rotate(180deg);
+    opacity: 0.85;
+  }
+}
+
+.animate-anime-blink {
+  animation: anime-blink 3.8s ease-in-out infinite;
+}
+
+.animate-anime-breathe {
+  animation: anime-breathe-2d 4s ease-in-out infinite;
+}
+
+.animate-hair-breeze {
+  animation: hair-breeze-sway 3.2s ease-in-out infinite;
+}
+
+.animate-ribbon-flutter {
+  animation: ribbon-flutter 2.8s ease-in-out infinite;
+}
+
+.animate-sparkle-rise {
+  animation: magic-sparkle-rise 2.4s ease-out infinite;
+}
+
+.animate-arcane-pulse {
+  animation: arcane-sigil-pulse 6s linear infinite;
+}
+

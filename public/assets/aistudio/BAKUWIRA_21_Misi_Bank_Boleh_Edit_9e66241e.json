@@ -1,0 +1,838 @@
+{
+  "project": "BAKUWIRA: Misi Penyelamat Bahasa",
+  "titleFromPdf": "BAKUWIRA — Jelajah Perkataan | Pulihkan Komunikasi",
+  "sourceFile": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+  "schemaVersion": "1.0.0",
+  "editorNote": "Salinan berstruktur berdasarkan PDF yang dibekalkan. Kandungan sumber dipisahkan daripada metadata sistem supaya boleh diedit tanpa menjejaskan rujukan asal.",
+  "targetAudience": "Murid Tahap 2 (Tahun 4–6)",
+  "counts": {
+    "regions": 5,
+    "physicalLocations": 20,
+    "mainChallenges": 21,
+    "finalEvent": 1
+  },
+  "regions": [
+    {
+      "id": "W01",
+      "name": "Kota Media Sosial",
+      "reward": "Kristal Komunikasi Digital",
+      "locations": [
+        {
+          "id": "W01-L01",
+          "name": "Dataran Mesej"
+        },
+        {
+          "id": "W01-L02",
+          "name": "Pusat Komunikasi"
+        },
+        {
+          "id": "W01-L03",
+          "name": "Lorong Singkatan"
+        },
+        {
+          "id": "W01-L04",
+          "name": "Menara Hologram"
+        }
+      ]
+    },
+    {
+      "id": "W02",
+      "name": "Akademi Detektif Bahasa",
+      "reward": "Lencana Detektif Bahasa",
+      "locations": [
+        {
+          "id": "W02-L01",
+          "name": "Dewan Bukti"
+        },
+        {
+          "id": "W02-L02",
+          "name": "Perpustakaan Misteri"
+        },
+        {
+          "id": "W02-L03",
+          "name": "Makmal Kata"
+        },
+        {
+          "id": "W02-L04",
+          "name": "Menara Pemerhatian"
+        }
+      ]
+    },
+    {
+      "id": "W03",
+      "name": "Bengkel Bahasa Baku",
+      "reward": "Pena Emas Bahasa Baku",
+      "locations": [
+        {
+          "id": "W03-L01",
+          "name": "Mesin Susun Ayat"
+        },
+        {
+          "id": "W03-L02",
+          "name": "Dewan Penulis"
+        },
+        {
+          "id": "W03-L03",
+          "name": "Perpustakaan Kosa Kata"
+        },
+        {
+          "id": "W03-L04",
+          "name": "Taman Pena"
+        }
+      ]
+    },
+    {
+      "id": "W04",
+      "name": "Kampung Komunikasi",
+      "reward": "Mikrofon Emas Wira Bahasa",
+      "locations": [
+        {
+          "id": "W04-L01",
+          "name": "Sekolah Harmoni"
+        },
+        {
+          "id": "W04-L02",
+          "name": "Pasar Komuniti"
+        },
+        {
+          "id": "W04-L03",
+          "name": "Balai Penduduk"
+        },
+        {
+          "id": "W04-L04",
+          "name": "Pentas Bicara"
+        }
+      ]
+    },
+    {
+      "id": "W05",
+      "name": "Istana Wira Bahasa",
+      "reward": "Mahkota BAKUWIRA - Wira Keterampilan Bahasa",
+      "locations": [
+        {
+          "id": "W05-L01",
+          "name": "Dewan Diraja"
+        },
+        {
+          "id": "W05-L02",
+          "name": "Galeri Kristal"
+        },
+        {
+          "id": "W05-L03",
+          "name": "Pentas Pengucapan"
+        },
+        {
+          "id": "W05-L04",
+          "name": "Balairung Bahasa"
+        }
+      ]
+    }
+  ],
+  "rubrics": {
+    "writing": {
+      "ketepatanBahasaBaku": 30,
+      "tatabahasa": 25,
+      "kesesuaianLaras": 20,
+      "kejelasan": 15,
+      "kesantunan": 10
+    },
+    "speaking": {
+      "ketepatanBahasaBaku": 25,
+      "kelancaran": 20,
+      "kesesuaianLaras": 20,
+      "kejelasan": 25,
+      "kesantunan": 10
+    }
+  },
+  "missions": [
+    {
+      "id": "BW-M01",
+      "number": 1,
+      "regionId": "W01",
+      "region": "Kota Media Sosial",
+      "locationId": "W01-L01",
+      "location": "Dataran Mesej",
+      "title": "Pemburu Mesej Rojak",
+      "type": "word_highlight_match",
+      "sourceType": "PENEROKAAN / KLIK PERKATAAN",
+      "sourceContent": {
+        "situasi": "Pemain menemui skrin hologram di tengah dataran.",
+        "bahanDialogSoalan": "“Guys, please submit homework BM before Friday.”",
+        "arahanPemain": "Klik bahagian bahasa Inggeris yang dicampurkan dalam mesej dan padankan dengan ungkapan bahasa Melayu yang sesuai.",
+        "jawapanPanduanPenilaian": "Guys → kawan-kawan; please → sila; submit → hantar; homework → kerja sekolah; before Friday → sebelum hari Jumaat.",
+        "mekanikPermainan": "Perkataan yang betul akan menyala; padanan dipaparkan pada skrin. Pemain hanya perlu menyelesaikan satu mesej ini."
+      },
+      "structuredAnswer": {
+        "pairs": [
+          [
+            "Guys",
+            "kawan-kawan"
+          ],
+          [
+            "please",
+            "sila"
+          ],
+          [
+            "submit",
+            "hantar"
+          ],
+          [
+            "homework",
+            "kerja sekolah"
+          ],
+          [
+            "before Friday",
+            "sebelum hari Jumaat"
+          ]
+        ]
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 3
+      }
+    },
+    {
+      "id": "BW-M02",
+      "number": 2,
+      "regionId": "W01",
+      "region": "Kota Media Sosial",
+      "locationId": "W01-L02",
+      "location": "Pusat Komunikasi",
+      "title": "Mesej kepada Guru",
+      "type": "single_choice",
+      "sourceType": "KUIZ ANEKA PILIHAN (1 JAWAPAN)",
+      "sourceContent": {
+        "situasi": "NPC Amir ingin bertanya kepada guru tentang tarikh penghantaran tugasan.",
+        "bahanDialogSoalan": "Mesej manakah paling sesuai dihantar kepada guru? A. “Cikgu, homework kena submit bila?” B. “Cikgu, bila due date?” C. “Selamat pagi, cikgu. Bilakah tarikh akhir penghantaran tugasan?”",
+        "arahanPemain": "Pilih satu mesej paling sesuai untuk komunikasi rasmi dengan guru.",
+        "jawapanPanduanPenilaian": "C. Mesej menggunakan bahasa baku, sopan dan menyatakan tujuan dengan jelas.",
+        "mekanikPermainan": "Pilih A, B atau C pada panel komunikasi; sistem memaparkan maklum balas sebelum membuka gerbang."
+      },
+      "structuredAnswer": {
+        "options": [
+          {
+            "key": "A",
+            "text": "Cikgu, homework kena submit bila?"
+          },
+          {
+            "key": "B",
+            "text": "Cikgu, bila due date?"
+          },
+          {
+            "key": "C",
+            "text": "Selamat pagi, cikgu. Bilakah tarikh akhir penghantaran tugasan?"
+          }
+        ],
+        "correctKeys": [
+          "C"
+        ]
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 3
+      }
+    },
+    {
+      "id": "BW-M03",
+      "number": 3,
+      "regionId": "W01",
+      "region": "Kota Media Sosial",
+      "locationId": "W01-L03",
+      "location": "Lorong Singkatan",
+      "title": "Nyahkod Mesej",
+      "type": "writing_rewrite",
+      "sourceType": "PENULISAN / BAIKI AYAT",
+      "sourceContent": {
+        "situasi": "Pemain memperoleh mesej rahsia yang terpancar pada dinding lorong.",
+        "bahanDialogSoalan": "“Cikgu, sy x dpt dtg sklh esok sbb demam.”",
+        "arahanPemain": "Tulis semula mesej tersebut menggunakan bahasa Melayu baku yang sesuai dihantar kepada guru.",
+        "jawapanPanduanPenilaian": "Contoh: “Selamat pagi, cikgu. Saya tidak dapat hadir ke sekolah esok kerana demam.”",
+        "mekanikPermainan": "Pemain menaip pada terminal; AI memberikan petunjuk bagi singkatan yang belum diperbetulkan."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 4
+      }
+    },
+    {
+      "id": "BW-M04",
+      "number": 4,
+      "regionId": "W01",
+      "region": "Kota Media Sosial",
+      "locationId": "W01-L04",
+      "location": "Menara Hologram",
+      "title": "Penyampai Digital",
+      "type": "speaking_announcement",
+      "sourceType": "SIMULASI PENGUCAPAN / 60 SAAT",
+      "sourceContent": {
+        "situasi": "NPC Pengurus Menara meminta pemain menjadi penyampai pengumuman Program Membaca Digital.",
+        "bahanDialogSoalan": "Maklumat yang diberi NPC: Program Membaca Digital; esok, 8.00 pagi; makmal komputer.",
+        "arahanPemain": "Sampaikan pengumuman mengandungi nama program, masa, tempat dan ajakan menyertai program. Gunakan bahasa Melayu baku.",
+        "jawapanPanduanPenilaian": "Penilaian: maklumat lengkap, bahasa sopan, sebutan jelas dan susunan pengumuman. Tiada satu skrip wajib.",
+        "mekanikPermainan": "30 saat persediaan; maksimum 60 saat rakaman suara; pemain mendengar semula dan menerima cadangan penambahbaikan."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": 30,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 4
+      }
+    },
+    {
+      "id": "BW-M05",
+      "number": 5,
+      "regionId": "W02",
+      "region": "Akademi Detektif Bahasa",
+      "locationId": "W02-L01",
+      "location": "Dewan Bukti",
+      "title": "Kes Mesej Mengelirukan",
+      "type": "investigation_writing",
+      "sourceType": "PENYIASATAN / CARI BUKTI",
+      "sourceContent": {
+        "situasi": "Detektif NPC menyerahkan rakaman mesej perjumpaan yang mencetuskan salah faham.",
+        "bahanDialogSoalan": "“Guys, meeting esok kat tempat biasa, okay?”",
+        "arahanPemain": "Kenal pasti dua maklumat yang tidak jelas. Kemudian tulis semula mesej dengan masa dan tempat yang tepat.",
+        "jawapanPanduanPenilaian": "Maklumat tidak jelas: masa dan tempat. Contoh: “Kawan-kawan, kita akan mengadakan perjumpaan esok pada pukul 10.00 pagi di perpustakaan.”",
+        "mekanikPermainan": "Klik dua ikon bukti (jam dan lokasi), kemudian lengkapkan mesej pada papan penyiasatan."
+      },
+      "structuredAnswer": {
+        "evidence": [
+          "masa",
+          "tempat"
+        ]
+      },
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 5
+      }
+    },
+    {
+      "id": "BW-M06",
+      "number": 6,
+      "regionId": "W02",
+      "region": "Akademi Detektif Bahasa",
+      "locationId": "W02-L02",
+      "location": "Perpustakaan Misteri",
+      "title": "Mengapa Bahasa Rojak Digunakan?",
+      "type": "multiple_choice",
+      "sourceType": "KUIZ BERBILANG JAWAPAN",
+      "sourceContent": {
+        "situasi": "NPC pustakawan menunjukkan diari seorang murid yang sering menggunakan bahasa rojak dalam talian.",
+        "bahanDialogSoalan": "Pilih SEMUA faktor yang mungkin mempengaruhi penggunaan bahasa rojak. A. Pengaruh media sosial. B. Kebiasaan menggunakan lebih daripada satu bahasa. C. Keinginan menulis mesej dengan cepat. D. Semua murid tidak mengetahui bahasa Melayu.",
+        "arahanPemain": "Tandakan semua pilihan yang munasabah berdasarkan situasi, bukan hanya satu jawapan.",
+        "jawapanPanduanPenilaian": "A, B dan C. Pilihan D tidak boleh digeneralisasikan kepada semua murid.",
+        "mekanikPermainan": "Pemain menyiasat tiga halaman diari dan mengunci pilihan pada buku misteri."
+      },
+      "structuredAnswer": {
+        "options": [
+          {
+            "key": "A",
+            "text": "Pengaruh media sosial."
+          },
+          {
+            "key": "B",
+            "text": "Kebiasaan menggunakan lebih daripada satu bahasa."
+          },
+          {
+            "key": "C",
+            "text": "Keinginan menulis mesej dengan cepat."
+          },
+          {
+            "key": "D",
+            "text": "Semua murid tidak mengetahui bahasa Melayu."
+          }
+        ],
+        "correctKeys": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 5
+      }
+    },
+    {
+      "id": "BW-M07",
+      "number": 7,
+      "regionId": "W02",
+      "region": "Akademi Detektif Bahasa",
+      "locationId": "W02-L03",
+      "location": "Makmal Kata",
+      "title": "Eksperimen Bahasa",
+      "type": "matching",
+      "sourceType": "PADANAN SERET DAN LEPAS",
+      "sourceContent": {
+        "situasi": "Profesor Bahasa meminta pemain menghidupkan mesin dengan pasangan kosa kata yang betul.",
+        "bahanDialogSoalan": "Padankan istilah: submit, feedback, update, share.",
+        "arahanPemain": "Seret empat istilah kepada padanan bahasa Melayu yang sesuai dalam konteks komunikasi digital.",
+        "jawapanPanduanPenilaian": "Submit → hantar; feedback → maklum balas; update → kemas kini; share → kongsi.",
+        "mekanikPermainan": "Setiap pasangan tepat menyalakan satu bahagian mesin; keempat-empat pasangan membuka pintu makmal."
+      },
+      "structuredAnswer": {
+        "pairs": [
+          [
+            "submit",
+            "hantar"
+          ],
+          [
+            "feedback",
+            "maklum balas"
+          ],
+          [
+            "update",
+            "kemas kini"
+          ],
+          [
+            "share",
+            "kongsi"
+          ]
+        ]
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 6
+      }
+    },
+    {
+      "id": "BW-M08",
+      "number": 8,
+      "regionId": "W02",
+      "region": "Akademi Detektif Bahasa",
+      "locationId": "W02-L04",
+      "location": "Menara Pemerhatian",
+      "title": "Selesaikan Salah Faham",
+      "type": "npc_dialogue",
+      "sourceType": "SIMULASI PERBUALAN NPC",
+      "sourceContent": {
+        "situasi": "NPC A menyatakan: “Kita meet after class.” NPC B tidak mengetahui masa dan tempat pertemuan.",
+        "bahanDialogSoalan": "NPC B: “Saya kurang pasti kita perlu berjumpa di mana dan pada pukul berapa.”",
+        "arahanPemain": "Tanya NPC A untuk mendapatkan masa dan tempat yang tepat, kemudian sampaikan semula arahan lengkap kepada NPC B.",
+        "jawapanPanduanPenilaian": "Penilaian: pemain meminta penjelasan, tidak mereka-reka masa/lokasi, dan memberikan arahan yang jelas serta sopan.",
+        "mekanikPermainan": "Pilih soalan susulan atau bercakap dengan NPC; respons NPC menentukan maklumat yang dibuka."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 6
+      }
+    },
+    {
+      "id": "BW-M09",
+      "number": 9,
+      "regionId": "W03",
+      "region": "Bengkel Bahasa Baku",
+      "locationId": "W03-L01",
+      "location": "Mesin Susun Ayat",
+      "title": "Baiki Ayat Rosak",
+      "type": "word_order",
+      "sourceType": "SERET / SUSUN AYAT",
+      "sourceContent": {
+        "situasi": "Mesin ajaib tidak dapat berfungsi kerana satu ayat bercampur bahasa.",
+        "bahanDialogSoalan": "“Saya already submit homework dekat cikgu.”",
+        "arahanPemain": "Susun kad perkataan yang disediakan untuk membentuk satu ayat bahasa Melayu baku.",
+        "jawapanPanduanPenilaian": "“Saya sudah menghantar kerja sekolah kepada cikgu.”",
+        "mekanikPermainan": "Seret kad ke slot susunan ayat. Mesin diaktifkan apabila ayat lengkap dan gramatis."
+      },
+      "structuredAnswer": {
+        "referenceSentence": "Saya sudah menghantar kerja sekolah kepada cikgu."
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 7
+      }
+    },
+    {
+      "id": "BW-M10",
+      "number": 10,
+      "regionId": "W03",
+      "region": "Bengkel Bahasa Baku",
+      "locationId": "W03-L02",
+      "location": "Dewan Penulis",
+      "title": "Penulis Mesej Rasmi",
+      "type": "writing_message",
+      "sourceType": "PENULISAN INTERAKTIF",
+      "sourceContent": {
+        "situasi": "NPC penulis ingin menyertai pertandingan bercerita tetapi belum mengetahui tarikhnya.",
+        "bahanDialogSoalan": "Situasi: Kamu ialah murid yang ingin bertanya tentang tarikh pertandingan bercerita kepada guru.",
+        "arahanPemain": "Tulis satu mesej ringkas kepada guru. Sertakan salam, pertanyaan yang jelas dan ucapan terima kasih.",
+        "jawapanPanduanPenilaian": "Contoh: “Selamat pagi, cikgu. Saya ingin bertanya tentang tarikh pertandingan bercerita. Terima kasih, cikgu.”",
+        "mekanikPermainan": "Taip pada helaian ajaib; petunjuk akan muncul jika salam, pertanyaan atau penutup tertinggal."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 7
+      }
+    },
+    {
+      "id": "BW-M11",
+      "number": 11,
+      "regionId": "W03",
+      "region": "Bengkel Bahasa Baku",
+      "locationId": "W03-L03",
+      "location": "Perpustakaan Kosa Kata",
+      "title": "Khazanah Digital",
+      "type": "matching",
+      "sourceType": "PADANAN ISTILAH DIGITAL",
+      "sourceContent": {
+        "situasi": "Empat buku ajaib terkunci. Setiap buku menyimpan satu istilah dalam komunikasi digital.",
+        "bahanDialogSoalan": "Istilah: download, upload, save, delete.",
+        "arahanPemain": "Padankan istilah dengan perkataan bahasa Melayu yang sesuai.",
+        "jawapanPanduanPenilaian": "Download → muat turun; upload → muat naik; save → simpan; delete → padam.",
+        "mekanikPermainan": "Setiap padanan tepat membuka satu buku dan memasukkan perkataan baharu ke dalam inventori kosa kata."
+      },
+      "structuredAnswer": {
+        "pairs": [
+          [
+            "download",
+            "muat turun"
+          ],
+          [
+            "upload",
+            "muat naik"
+          ],
+          [
+            "save",
+            "simpan"
+          ],
+          [
+            "delete",
+            "padam"
+          ]
+        ]
+      },
+      "assessmentMode": "objective",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 8
+      }
+    },
+    {
+      "id": "BW-M12",
+      "number": 12,
+      "regionId": "W03",
+      "region": "Bengkel Bahasa Baku",
+      "locationId": "W03-L04",
+      "location": "Taman Pena",
+      "title": "Pengumuman Sekolah",
+      "type": "writing_announcement",
+      "sourceType": "SIMULASI PENULISAN",
+      "sourceContent": {
+        "situasi": "NPC pengawas menerima arahan untuk menyediakan pengumuman Gotong-royong Perdana.",
+        "bahanDialogSoalan": "Program: Gotong-royong Perdana. Hari: Sabtu. Masa: 8.00 pagi. Tempat: kawasan sekolah.",
+        "arahanPemain": "Hasilkan satu pengumuman rasmi 30–50 patah perkataan menggunakan semua maklumat di atas.",
+        "jawapanPanduanPenilaian": "Contoh: “Perhatian kepada semua murid. Gotong-royong Perdana akan diadakan pada hari Sabtu, pukul 8.00 pagi, di kawasan sekolah. Semua murid dijemput menyertai aktiviti ini bagi memastikan persekitaran sekolah sentiasa bersih dan ceria. Terima kasih.”",
+        "mekanikPermainan": "Sunting teks pada papan pengumuman; guru NPC boleh memberi maklum balas sebelum penerbitan."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 8
+      }
+    },
+    {
+      "id": "BW-M13",
+      "number": 13,
+      "regionId": "W04",
+      "region": "Kampung Komunikasi",
+      "locationId": "W04-L01",
+      "location": "Sekolah Harmoni",
+      "title": "Berjumpa Guru",
+      "type": "speaking_npc",
+      "sourceType": "SIMULASI NPC / PERTUTURAN",
+      "sourceContent": {
+        "situasi": "Pemain memasuki bilik guru dan berjumpa Guru Aina.",
+        "bahanDialogSoalan": "Guru Aina: “Selamat pagi. Mengapakah kamu belum menghantar tugasan Bahasa Melayu?”",
+        "arahanPemain": "Jelaskan sebab secara sopan dan nyatakan langkah yang akan diambil untuk menyiapkan atau menghantar tugasan.",
+        "jawapanPanduanPenilaian": "Penilaian: salam/ucapan, penjelasan relevan, tindakan susulan dan kesantunan. Jawapan boleh berbeza mengikut situasi.",
+        "mekanikPermainan": "30 saat persediaan, maksimum 60 saat percakapan; NPC menjawab berdasarkan isi pertuturan.",
+        "had": "maksimum 60 saat bagi pertuturan pemain. PASAR KOMUNITI Pelanggan Bijak Bahasa"
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": 30,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 9
+      }
+    },
+    {
+      "id": "BW-M14",
+      "number": 14,
+      "regionId": "W04",
+      "region": "Kampung Komunikasi",
+      "locationId": "W04-L02",
+      "location": "Pasar Komuniti",
+      "title": "Pelanggan Bijak Bahasa",
+      "type": "speaking_transaction",
+      "sourceType": "SIMULASI JUAL BELI",
+      "sourceContent": {
+        "situasi": "Pemain mengunjungi kedai buku. Peniaga NPC menyambut kedatangan pemain.",
+        "bahanDialogSoalan": "Peniaga: “Selamat datang! Ada apa-apa yang boleh saya bantu?”",
+        "arahanPemain": "Tanya tentang harga sebuah buku dan sama ada buku itu masih ada. Akhiri perbualan dengan ucapan terima kasih.",
+        "jawapanPanduanPenilaian": "Penilaian: pertanyaan tentang harga, ketersediaan, penggunaan bahasa yang jelas dan sopan.",
+        "mekanikPermainan": "Pemain berbual menggunakan mikrofon/teks. Peniaga membalas; tempoh pertuturan pemain maksimum 60 saat.",
+        "had": "maksimum 60 saat bagi pertuturan pemain."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 9
+      }
+    },
+    {
+      "id": "BW-M15",
+      "number": 15,
+      "regionId": "W04",
+      "region": "Kampung Komunikasi",
+      "locationId": "W04-L03",
+      "location": "Balai Penduduk",
+      "title": "Wartawan Cilik",
+      "type": "speaking_interview",
+      "sourceType": "SIMULASI TEMU BUAL",
+      "sourceContent": {
+        "situasi": "NPC Ketua Kampung mengadakan sesi temu bual tentang komunikasi penduduk melalui aplikasi mesej.",
+        "bahanDialogSoalan": "Ketua Kampung: “Silakan kemukakan soalan kamu tentang penggunaan bahasa dalam komunikasi masyarakat.”",
+        "arahanPemain": "Ajukan dua soalan yang relevan tentang kepentingan komunikasi jelas atau kesan singkatan yang mengelirukan.",
+        "jawapanPanduanPenilaian": "Contoh: “Apakah masalah yang boleh berlaku apabila penduduk menggunakan terlalu banyak singkatan?” / “Bagaimanakah kita boleh memastikan pengumuman komuniti mudah difahami?”",
+        "mekanikPermainan": "Ketua Kampung memberi jawapan yang relevan selepas setiap pertanyaan; jumlah pertuturan pemain maksimum 60 saat.",
+        "had": "maksimum 60 saat bagi pertuturan pemain. PENTAS BICARA Forum Mini Bahasa Rojak"
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 10
+      }
+    },
+    {
+      "id": "BW-M16",
+      "number": 16,
+      "regionId": "W04",
+      "region": "Kampung Komunikasi",
+      "locationId": "W04-L04",
+      "location": "Pentas Bicara",
+      "title": "Forum Mini Bahasa Rojak",
+      "type": "speaking_forum",
+      "sourceType": "SIMULASI FORUM NPC",
+      "sourceContent": {
+        "situasi": "Pemain menjadi ahli panel dalam forum mini bersama moderator NPC.",
+        "bahanDialogSoalan": "Moderator: “Bagaimanakah penggunaan bahasa rojak yang berlebihan boleh mempengaruhi penulisan rasmi murid?”",
+        "arahanPemain": "Jawab dengan satu pendapat, satu sebab dan satu contoh yang sesuai.",
+        "jawapanPanduanPenilaian": "Contoh isi: kebiasaan menggunakan singkatan boleh terbawa ke dalam tugasan rasmi; murid perlu menyemak laras sebelum menghantar karangan.",
+        "mekanikPermainan": "Pemain menyampaikan respons maksimum 60 saat; moderator memberi maklum balas dan menutup sesi.",
+        "had": "maksimum 60 saat bagi pertuturan pemain."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 10
+      }
+    },
+    {
+      "id": "BW-M17",
+      "number": 17,
+      "regionId": "W05",
+      "region": "Istana Wira Bahasa",
+      "locationId": "W05-L01",
+      "location": "Dewan Diraja",
+      "title": "Utusan Bahasa",
+      "type": "writing_invitation",
+      "sourceType": "PENULISAN MESEJ RASMI",
+      "sourceContent": {
+        "situasi": "Raja Bahasa ingin menjemput penduduk menyertai Sambutan Minggu Bahasa.",
+        "bahanDialogSoalan": "Maklumat program diberikan oleh NPC: nama program, tarikh, masa, dan tempat di istana.",
+        "arahanPemain": "Hasilkan mesej jemputan yang sopan dan mengandungi keempat-empat maklumat yang diperoleh daripada NPC.",
+        "jawapanPanduanPenilaian": "Penilaian: tujuan jemputan jelas; nama program, tarikh, masa dan tempat lengkap. Jangan mereka-reka maklumat yang belum diberikan NPC.",
+        "mekanikPermainan": "Pemain menemui NPC utusan untuk mendapatkan butiran sebelum menulis surat pada meja diraja."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 11
+      }
+    },
+    {
+      "id": "BW-M18",
+      "number": 18,
+      "regionId": "W05",
+      "region": "Istana Wira Bahasa",
+      "locationId": "W05-L02",
+      "location": "Galeri Kristal",
+      "title": "Pulihkan Kristal Bahasa",
+      "type": "investigation_writing",
+      "sourceType": "CARI DAN BETULKAN BAHASA ROJAK",
+      "sourceContent": {
+        "situasi": "Sebuah kristal memaparkan mesej rasmi yang bercampur bahasa.",
+        "bahanDialogSoalan": "“Guys, event bahasa start esok. Please come early!”",
+        "arahanPemain": "Kenal pasti penggunaan bahasa campuran yang kurang sesuai dan tulis semula mesej sebagai pengumuman bahasa Melayu baku.",
+        "jawapanPanduanPenilaian": "Contoh: “Kawan-kawan, program bahasa akan bermula esok. Sila hadir lebih awal.”",
+        "mekanikPermainan": "Pemain menyentuh kristal untuk menandakan perkataan dan memasukkan versi pembetulan."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": null,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 11
+      }
+    },
+    {
+      "id": "BW-M19",
+      "number": 19,
+      "regionId": "W05",
+      "region": "Istana Wira Bahasa",
+      "locationId": "W05-L03",
+      "location": "Pentas Pengucapan",
+      "title": "Pidato Wira Bahasa",
+      "type": "speaking_speech",
+      "sourceType": "SIMULASI PIDATO / 60 SAAT",
+      "sourceContent": {
+        "situasi": "Pemain dipilih sebagai wakil murid untuk berucap di Pentas Pengucapan.",
+        "bahanDialogSoalan": "Tajuk pidato: “Bahasa Melayu Tanggungjawab Kita”.",
+        "arahanPemain": "Sampaikan pidato ringkas dengan pembukaan, dua isi penting dan penutup.",
+        "jawapanPanduanPenilaian": "Panduan isi: bahasa Melayu sebagai bahasa kebangsaan; penggunaan bahasa baku dalam pembelajaran; menjaga kesantunan komunikasi.",
+        "mekanikPermainan": "30 saat persediaan; maksimum 60 saat rakaman; AI memberikan transkrip dan maklum balas membina.",
+        "had": "maksimum 60 saat bagi pertuturan pemain. BALAIRUNG BAHASA Menghadap Raja Bahasa"
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": 30,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 12
+      }
+    },
+    {
+      "id": "BW-M20",
+      "number": 20,
+      "regionId": "W05",
+      "region": "Istana Wira Bahasa",
+      "locationId": "W05-L04",
+      "location": "Balairung Bahasa",
+      "title": "Menghadap Raja Bahasa",
+      "type": "speaking_npc",
+      "sourceType": "SIMULASI DIALOG NPC / 60 SAAT",
+      "sourceContent": {
+        "situasi": "Raja Bahasa meminta nasihat pemain untuk meningkatkan kemahiran berbahasa dalam era digital.",
+        "bahanDialogSoalan": "Raja Bahasa: “Wahai Wira Bahasa, apakah yang boleh dilakukan oleh murid untuk meningkatkan keterampilan bertutur dan menulis dalam era digital?”",
+        "arahanPemain": "Berikan dua cadangan dan jelaskan manfaatnya secara ringkas.",
+        "jawapanPanduanPenilaian": "Contoh isi: menggunakan bahasa yang sesuai mengikut konteks; membaca contoh penulisan baku; berlatih pengucapan; menyemak mesej rasmi sebelum dihantar.",
+        "mekanikPermainan": "Raja mendengar jawapan maksimum 60 saat dan memberi reaksi berdasarkan kejelasan serta kesesuaian isi.",
+        "had": "maksimum 60 saat bagi pertuturan pemain."
+      },
+      "structuredAnswer": {},
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 12
+      }
+    },
+    {
+      "id": "BW-M21",
+      "number": 21,
+      "regionId": "W05",
+      "region": "Istana Wira Bahasa",
+      "locationId": "W05-FINAL",
+      "location": "Cabaran Penamat (di Istana Wira Bahasa; bukan lokasi kelima)",
+      "title": "Selamatkan Kerajaan Bahasa",
+      "type": "integrated_final",
+      "sourceType": "CABARAN AKHIR BERSEPADU: SIASAT + TULIS + TUTUR",
+      "sourceContent": {
+        "situasi": "Sistem komunikasi kerajaan terganggu. Raja Bahasa meminta pemain membaiki satu pengumuman sebelum diumumkan kepada rakyat.",
+        "bahanDialogSoalan": "Draf pengumuman: “Guys, royal language event start esok pukul 8. Please come early ke dewan!”",
+        "arahanPemain": "FASA 1 - SIASAT: Kenal pasti bahasa campuran yang kurang sesuai. FASA 2 - TULIS: Sediakan pengumuman Melayu baku dengan maklumat yang tersedia; dapatkan nama rasmi program daripada NPC jika diperlukan. FASA 3 - BERTUTUR: Sampaikan pengumuman yang telah diperbaik dalam masa maksimum 60 saat.",
+        "jawapanPanduanPenilaian": "Contoh: “Perhatian kepada semua hadirin. Program bahasa diraja akan bermula esok pada pukul 8.00 pagi di dewan. Semua hadirin diminta hadir lebih awal.” Maklumat program boleh diganti dengan nama sebenar daripada NPC.",
+        "mekanikPermainan": "Ketiga-tiga fasa diselesaikan dalam satu misi bos; pemain memperoleh Mahkota BAKUWIRA selepas berjaya."
+      },
+      "structuredAnswer": {
+        "phases": [
+          "SIASAT",
+          "TULIS",
+          "BERTUTUR"
+        ]
+      },
+      "assessmentMode": "rubric_or_teacher_review",
+      "timeLimitSpeakingSeconds": 60,
+      "preparationSeconds": null,
+      "editable": true,
+      "source": {
+        "file": "BAKUWIRA_Cadangan_21_Soalan_Kuiz_Simulasi(1).pdf",
+        "page": 13
+      }
+    }
+  ]
+}
