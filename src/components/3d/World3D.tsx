@@ -11,6 +11,19 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { AvatarCustomization, MissionQuestion, RegionId, SubLocationInfo } from '../../types/game';
 import { REGIONS_DATA } from '../../data/missionBank';
 import { soundEffects } from '../../utils/audioEffects';
+import {
+  createPlazaTileTexture,
+  createPalaceSignTexture,
+  createSocialFeedTexture,
+  createFloatingReactionIcon,
+  createSakuraTree,
+  createPlazaColonnade,
+  createBannerLampPost,
+  createStudentNPC,
+  createGrandPalaceFacade,
+  createCentralHoloPavilion,
+  getKotaMediaColliders,
+} from './kotaMediaProcedural';
 
 interface World3DProps {
   regionId: RegionId;
@@ -45,6 +58,7 @@ export const World3D: React.FC<World3DProps> = ({
   const [isSprintActive, setIsSprintActive] = useState(false);
   const isSprintRef = useRef(false);
   const joystickTouchIdRef = useRef<number | null>(null);
+  const joystickPointerIdRef = useRef<number | null>(null);
   const [showTouchControls, setShowTouchControls] = useState(true);
 
   // Detect touch device or mobile/compact landscape screen
@@ -164,239 +178,247 @@ export const World3D: React.FC<World3DProps> = ({
     const buildEnvironment = () => {
       if (regionId === 'kota_media') {
         // ==========================================
-        // REGION 1: KOTA MEDIA SOSIAL (Illustration 1)
-        // Futuristic Cyber Towers, Holographic Fountain, Sakura Trees & Screens
+        // REGION 1: KOTA MEDIA SOSIAL (Official Anime Cyber Plaza Upgrade)
+        // Matching official illustrations 3D_MEDIA_SOSIAL_P & 3d_media_sosial_L
         // ==========================================
 
-        // 1. Central Digital Hologram Fountain
-        const fountainBase = new THREE.Mesh(
-          new THREE.CylinderGeometry(3.5, 4.0, 0.8, 24),
-          new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.4, metalness: 0.8 })
-        );
-        fountainBase.position.set(0, 0.4, 0);
-        envGroup.add(fountainBase);
+        // 1. Polished Royal Marble Courtyard Floor with Concentric Runic Circuits
+        const plazaTex = createPlazaTileTexture();
+        plazaTex.repeat.set(1, 1);
+        const plazaFloorGeo = new THREE.PlaneGeometry(42, 54, 16, 16);
+        const plazaFloorMat = new THREE.MeshStandardMaterial({
+          map: plazaTex,
+          roughness: 0.22,
+          metalness: 0.4,
+        });
+        const plazaFloor = new THREE.Mesh(plazaFloorGeo, plazaFloorMat);
+        plazaFloor.rotation.x = -Math.PI / 2;
+        plazaFloor.position.set(0, 0.03, 0);
+        plazaFloor.receiveShadow = !isSoftwareGl;
+        envGroup.add(plazaFloor);
 
-        // Holographic Globe Orb
-        const holoOrb = new THREE.Mesh(
-          new THREE.SphereGeometry(1.2, 18, 18),
-          new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.8 })
-        );
-        holoOrb.position.set(0, 2.2, 0);
-        envGroup.add(holoOrb);
+        // 2. Grand Cyber Palace Facade at North (Spanning z = -25 to -35)
+        const palaceSignTex = createPalaceSignTexture();
+        const palaceFacade = createGrandPalaceFacade(palaceSignTex);
+        envGroup.add(palaceFacade);
 
-        // Dual Rotating Neon Rings
-        const ring1 = new THREE.Mesh(
-          new THREE.TorusGeometry(1.9, 0.08, 12, 32),
-          new THREE.MeshBasicMaterial({ color: 0x818cf8 })
-        );
-        ring1.position.set(0, 2.2, 0);
-        ring1.rotation.x = Math.PI / 3;
-        envGroup.add(ring1);
-
-        const ring2 = new THREE.Mesh(
-          new THREE.TorusGeometry(2.3, 0.08, 12, 32),
-          new THREE.MeshBasicMaterial({ color: 0xa855f7 })
-        );
-        ring2.position.set(0, 2.2, 0);
-        ring2.rotation.y = Math.PI / 4;
-        envGroup.add(ring2);
-
-        animatedObjects.push({
-          mesh: holoOrb,
-          update: (t) => {
-            holoOrb.rotation.y = t * 0.8;
-            ring1.rotation.z = t * 1.2;
-            ring2.rotation.x = t * -0.9;
-          },
+        // 3. Central Holographic Social Media Pavilion (Positioned at z = -12)
+        // (Open and beautiful — NO wireframe sphere blocking the camera view!)
+        const feedProfileTex = createSocialFeedTexture('profile');
+        const feedTrendTex = createSocialFeedTexture('feed');
+        const feedChatTex = createSocialFeedTexture('chat');
+        const holoPavilion = createCentralHoloPavilion(feedProfileTex, feedTrendTex, feedChatTex);
+        envGroup.add(holoPavilion.group);
+        holoPavilion.animatedList.forEach((anim) => {
+          animatedObjects.push({
+            mesh: anim.mesh,
+            update: (t) => anim.update(t, 0.016),
+          });
         });
 
-        // Floating Communication Icon Cubes
-        const iconColors = [0x38bdf8, 0xec4899, 0xa855f7, 0x3b82f6];
-        for (let i = 0; i < 4; i++) {
-          const angle = (i * Math.PI) / 2;
-          const iconPlate = new THREE.Mesh(
-            new THREE.BoxGeometry(0.7, 0.7, 0.1),
-            new THREE.MeshStandardMaterial({
-              color: iconColors[i],
-              emissive: iconColors[i],
-              emissiveIntensity: 0.8,
-              roughness: 0.2,
-            })
-          );
-          iconPlate.position.set(Math.cos(angle) * 2.2, 3.8, Math.sin(angle) * 2.2);
-          envGroup.add(iconPlate);
+        // 4. Classical Two-Story Palace Colonnades (Left/West and Right/East Flanks)
+        const leftColonnade = createPlazaColonnade(false);
+        envGroup.add(leftColonnade);
+
+        const rightColonnade = createPlazaColonnade(true);
+        envGroup.add(rightColonnade);
+
+        // 5. Blooming Sakura Cherry Blossom Trees in Stone Planters
+        const sakuraCoords = [
+          [-14, -16], [14, -16],
+          [-14, -8], [14, -8],
+          [-14, 0], [14, 0],
+          [-14, 8], [14, 8],
+          [-14, 16], [14, 16],
+        ];
+        sakuraCoords.forEach(([sx, sz]) => {
+          const tree = createSakuraTree();
+          tree.position.set(sx, 0, sz);
+          envGroup.add(tree);
+        });
+
+        // 6. Royal Lamp-Posts with Hanging Bakuwira Purple Pennants
+        const bannerCoords: [number, number, 'left' | 'right'][] = [
+          [-10, -14, 'left'],
+          [10, -14, 'right'],
+          [-10, -5, 'left'],
+          [10, -5, 'right'],
+          [-10, 4, 'left'],
+          [10, 4, 'right'],
+          [-10, 13, 'left'],
+          [10, 13, 'right'],
+        ];
+        bannerCoords.forEach(([bx, bz, side]) => {
+          const lampPost = createBannerLampPost(side);
+          lampPost.position.set(bx, 0, bz);
+          envGroup.add(lampPost);
+        });
+
+        // 7. Student NPCs in Purple Uniforms (Academy Disciples chatting along promenades)
+        const studentCoords = [
+          [-13, -3, 0.4],
+          [-12.2, -4, -0.8],
+          [-13.5, 5, 1.2],
+          [13, -3, -0.5],
+          [12.2, -4, 0.9],
+          [13.5, 6, -1.1],
+          [-13, 11, 0.2],
+          [13, 11, -0.3],
+        ];
+        studentCoords.forEach(([stX, stZ, rotY]) => {
+          const student = createStudentNPC();
+          student.position.set(stX, 0, stZ);
+          student.rotation.y = rotY;
+          envGroup.add(student);
           animatedObjects.push({
-            mesh: iconPlate,
+            mesh: student,
             update: (t) => {
-              iconPlate.position.y = 3.6 + Math.sin(t * 2 + i) * 0.25;
-              iconPlate.rotation.y = t * 0.5 + i;
+              student.position.y = Math.sin(t * 2 + stX) * 0.02;
             },
           });
-        }
-
-        // 2. Cyber Towers with Glowing Vertical Strips and Hologram Billboards
-        for (const [x, z, height] of [
-          [-22, -18, 26],
-          [22, -18, 28],
-          [-24, 14, 22],
-          [24, 14, 24],
-        ]) {
-          const tower = new THREE.Group();
-          tower.position.set(x, 0, z);
-
-          const body = new THREE.Mesh(
-            new THREE.BoxGeometry(7, height, 7),
-            new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3, metalness: 0.85 })
-          );
-          body.position.y = height / 2;
-          tower.add(body);
-
-          // Glowing vertical neon accent
-          const neon = new THREE.Mesh(
-            new THREE.BoxGeometry(0.3, height * 0.95, 7.2),
-            new THREE.MeshStandardMaterial({ color: 0x8b5cf6, emissive: 0x8b5cf6, emissiveIntensity: 1.2 })
-          );
-          neon.position.y = height / 2;
-          tower.add(neon);
-
-          // Curved hologram billboard on top
-          const screen = new THREE.Mesh(
-            new THREE.PlaneGeometry(8, 4),
-            new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.75, side: THREE.DoubleSide })
-          );
-          screen.position.set(0, height + 2.5, 0);
-          screen.rotation.y = x > 0 ? -Math.PI / 4 : Math.PI / 4;
-          tower.add(screen);
-
-          envGroup.add(tower);
-        }
-
-        // 3. Pink Sakura Trees around the plaza
-        for (const [tx, tz] of [
-          [-9, -8],
-          [9, -8],
-          [-10, 10],
-          [10, 10],
-          [-16, 0],
-          [16, 0],
-        ]) {
-          const tree = new THREE.Group();
-          tree.position.set(tx, 0, tz);
-
-          const trunk = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.3, 0.45, 3.2, 8),
-            new THREE.MeshStandardMaterial({ color: 0x582c12, roughness: 0.9 })
-          );
-          trunk.position.y = 1.6;
-          tree.add(trunk);
-
-          const foliage = new THREE.Mesh(
-            new THREE.SphereGeometry(1.6, 12, 12),
-            new THREE.MeshStandardMaterial({ color: 0xf472b6, roughness: 0.7 })
-          );
-          foliage.position.y = 3.6;
-          tree.add(foliage);
-
-          envGroup.add(tree);
-        }
-
-        // 4. Walkable Neon Roads & Plazas (Connecting the 4 Locations)
-        const roadMat = new THREE.MeshStandardMaterial({
-          color: 0x1e1b4b,
-          roughness: 0.4,
-          metalness: 0.6,
         });
-        const neonLineMat = new THREE.MeshBasicMaterial({
-          color: 0x38bdf8,
+
+        // 8. Floating 3D Social Media Reaction Icons (Hovering gently around the plaza)
+        const reactions: [ 'like' | 'heart' | 'comment' | 'share' | 'bell' | 'video' | 'camera', number, number, number ][] = [
+          ['like', -8, 3.2, -6],
+          ['heart', -9, 3.6, 1],
+          ['comment', 8, 3.2, -6],
+          ['share', 9, 3.6, 1],
+          ['bell', 11, 3.8, -12],
+          ['camera', -11, 3.8, -12],
+          ['video', 9, 3.5, 9],
+          ['like', -9, 3.5, 9],
+        ];
+        reactions.forEach(([type, rx, ry, rz], idx) => {
+          const icon = createFloatingReactionIcon(type);
+          icon.position.set(rx, ry, rz);
+          envGroup.add(icon);
+          animatedObjects.push({
+            mesh: icon,
+            update: (t) => {
+              icon.position.y = ry + Math.sin(t * 2 + idx) * 0.25;
+              icon.rotation.y = t * 0.6 + idx;
+            },
+          });
+        });
+
+        // 9. Falling Sakura Petals Particle System
+        const petalCount = 50;
+        const petalGeo = new THREE.BufferGeometry();
+        const petalPos = new Float32Array(petalCount * 3);
+        const petalVel: { x: number; y: number; z: number; speed: number }[] = [];
+        for (let i = 0; i < petalCount; i++) {
+          petalPos[i * 3] = (Math.random() - 0.5) * 36;
+          petalPos[i * 3 + 1] = Math.random() * 8 + 0.5;
+          petalPos[i * 3 + 2] = (Math.random() - 0.5) * 44;
+          petalVel.push({
+            x: (Math.random() - 0.5) * 0.3,
+            y: -(Math.random() * 0.6 + 0.3),
+            z: Math.random() * 0.4 + 0.1,
+            speed: Math.random() * 2 + 1,
+          });
+        }
+        petalGeo.setAttribute('position', new THREE.BufferAttribute(petalPos, 3));
+        const petalMat = new THREE.PointsMaterial({
+          color: 0xfbcfe8,
+          size: 0.18,
           transparent: true,
           opacity: 0.85,
         });
+        const petalSystem = new THREE.Points(petalGeo, petalMat);
+        envGroup.add(petalSystem);
 
-        // Road to Pusat Komunikasi ([-12, 0, 10])
-        const roadToPusat = new THREE.Mesh(new THREE.PlaneGeometry(3.5, 16), roadMat);
-        roadToPusat.rotation.x = -Math.PI / 2;
-        roadToPusat.rotation.z = Math.atan2(10, -12) - Math.PI / 2;
-        roadToPusat.position.set(-6, 0.03, 5);
-        envGroup.add(roadToPusat);
+        animatedObjects.push({
+          mesh: petalSystem,
+          update: (t) => {
+            const posAttr = petalGeo.attributes.position as THREE.BufferAttribute;
+            for (let i = 0; i < petalCount; i++) {
+              let y = posAttr.getY(i) + petalVel[i].y * 0.016;
+              let x = posAttr.getX(i) + Math.sin(t * petalVel[i].speed + i) * 0.01;
+              let z = posAttr.getZ(i) + petalVel[i].z * 0.016;
+              if (y < 0.05) {
+                y = 8;
+                x = (Math.random() - 0.5) * 36;
+                z = (Math.random() - 0.5) * 44;
+              }
+              posAttr.setXYZ(i, x, y, z);
+            }
+            posAttr.needsUpdate = true;
+          },
+        });
 
-        // Road to Lorong Singkatan ([14, 0, 12])
-        const roadToLorong = new THREE.Mesh(new THREE.PlaneGeometry(3.5, 18), roadMat);
-        roadToLorong.rotation.x = -Math.PI / 2;
-        roadToLorong.rotation.z = Math.atan2(12, 14) - Math.PI / 2;
-        roadToLorong.position.set(7, 0.03, 6);
-        envGroup.add(roadToLorong);
+        // 10. The 4 Canonical Sublocations & NPC Mission Points
+        // ----------------------------------------------------
+        // Dataran Mesej ([0, 0, 0]) - Central Mission Runic Hub (Puan Zahra)
+        const dataranHubRing = new THREE.Mesh(
+          new THREE.TorusGeometry(2.4, 0.08, 8, 32),
+          new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.85 })
+        );
+        dataranHubRing.rotation.x = Math.PI / 2;
+        dataranHubRing.position.set(0, 0.05, 0);
+        envGroup.add(dataranHubRing);
 
-        // Road to Menara Hologram ([0, 0, -18])
-        const roadToMenara = new THREE.Mesh(new THREE.PlaneGeometry(4, 18), roadMat);
-        roadToMenara.rotation.x = -Math.PI / 2;
-        roadToMenara.position.set(0, 0.03, -9);
-        envGroup.add(roadToMenara);
+        animatedObjects.push({
+          mesh: dataranHubRing,
+          update: (t) => {
+            dataranHubRing.rotation.z = t * 0.5;
+          },
+        });
 
-        // Glowing center guide line
-        const roadLine1 = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 16), neonLineMat);
-        roadLine1.rotation.x = -Math.PI / 2;
-        roadLine1.position.set(0, 0.04, -9);
-        envGroup.add(roadLine1);
-
-        // 5. LOCATION 2: Pusat Komunikasi ([-12, 0, 10]) - Digital Messaging Hub
+        // Pusat Komunikasi ([-12, 0, 10]) - Digital Messaging Hub (Adik Amir)
         const pusatGroup = new THREE.Group();
         pusatGroup.position.set(-12, 0, 10);
 
         const pusatPlatform = new THREE.Mesh(
-          new THREE.CylinderGeometry(4.5, 5.0, 0.6, 16),
+          new THREE.CylinderGeometry(4.2, 4.6, 0.5, 16),
           new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.3, metalness: 0.7 })
         );
-        pusatPlatform.position.y = 0.3;
+        pusatPlatform.position.y = 0.25;
         pusatGroup.add(pusatPlatform);
 
         const terminalPod = new THREE.Mesh(
-          new THREE.BoxGeometry(3, 2.4, 2),
+          new THREE.BoxGeometry(2.8, 2.2, 1.8),
           new THREE.MeshStandardMaterial({ color: 0x312e81, roughness: 0.3, metalness: 0.6 })
         );
-        terminalPod.position.y = 1.5;
+        terminalPod.position.y = 1.35;
         pusatGroup.add(terminalPod);
 
-        // Holographic screen at terminal
         const pusatScreen = new THREE.Mesh(
           new THREE.PlaneGeometry(2.4, 1.4),
           new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.85 })
         );
-        pusatScreen.position.set(0, 2.8, 0);
+        pusatScreen.position.set(0, 2.7, 0);
         pusatGroup.add(pusatScreen);
 
-        // Satellite dish / antenna
         const antennaMast = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.1, 0.1, 3, 8),
+          new THREE.CylinderGeometry(0.1, 0.1, 3.2, 8),
           new THREE.MeshStandardMaterial({ color: 0xa5b4fc, metalness: 0.8 })
         );
-        antennaMast.position.set(1.2, 3.5, 0);
+        antennaMast.position.set(1.1, 3.4, 0);
         pusatGroup.add(antennaMast);
-
         envGroup.add(pusatGroup);
 
-        // 6. LOCATION 3: Lorong Singkatan ([14, 0, 12]) - Cyber Alley & Decode Pillars
+        // Lorong Singkatan ([14, 0, 12]) - Cyber Alley & Decode Pillars (Detektif Siber)
         const lorongGroup = new THREE.Group();
         lorongGroup.position.set(14, 0, 12);
 
-        // Glowing cyber archway
-        for (const archX of [-2, 2]) {
+        for (const archX of [-2.2, 2.2]) {
           const archPillar = new THREE.Mesh(
-            new THREE.BoxGeometry(0.6, 4.5, 0.6),
+            new THREE.BoxGeometry(0.65, 4.5, 0.65),
             new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.8 })
           );
           archPillar.position.set(archX, 2.25, 0);
           lorongGroup.add(archPillar);
         }
         const archTop = new THREE.Mesh(
-          new THREE.BoxGeometry(4.6, 0.6, 0.6),
+          new THREE.BoxGeometry(5.0, 0.6, 0.65),
           new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.8 })
         );
         archTop.position.set(0, 4.5, 0);
         lorongGroup.add(archTop);
 
-        // Floating abbreviation hologram sign
         const holoSign = new THREE.Mesh(
-          new THREE.PlaneGeometry(3.2, 1.2),
+          new THREE.PlaneGeometry(3.6, 1.3),
           new THREE.MeshBasicMaterial({ color: 0x22d3ee, side: THREE.DoubleSide, transparent: true, opacity: 0.9 })
         );
         holoSign.position.set(0, 3.2, 0);
@@ -408,41 +430,38 @@ export const World3D: React.FC<World3DProps> = ({
             holoSign.position.y = 3.2 + Math.sin(t * 2.5) * 0.15;
           },
         });
-
         envGroup.add(lorongGroup);
 
-        // 7. LOCATION 4: Menara Hologram ([0, 0, -18]) - Broadcast Spire
+        // Menara Hologram ([0, 0, -18]) - Broadcast Spire (Pengurus Menara)
         const menaraGroup = new THREE.Group();
         menaraGroup.position.set(0, 0, -18);
 
         const menaraBase = new THREE.Mesh(
-          new THREE.CylinderGeometry(3.5, 4.2, 2.5, 16),
+          new THREE.CylinderGeometry(3.2, 3.8, 1.8, 16),
           new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3, metalness: 0.8 })
         );
-        menaraBase.position.y = 1.25;
+        menaraBase.position.y = 0.9;
         menaraGroup.add(menaraBase);
 
         const menaraSpire = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.6, 1.8, 18, 12),
+          new THREE.CylinderGeometry(0.5, 1.4, 16, 12),
           new THREE.MeshStandardMaterial({ color: 0x4f46e5, roughness: 0.25, metalness: 0.75 })
         );
-        menaraSpire.position.y = 11.5;
+        menaraSpire.position.y = 9.8;
         menaraGroup.add(menaraSpire);
 
-        // High-altitude broadcast hologram billboard
         const broadcastScreen = new THREE.Mesh(
-          new THREE.PlaneGeometry(9, 5),
+          new THREE.PlaneGeometry(8, 4.5),
           new THREE.MeshBasicMaterial({ color: 0xa855f7, side: THREE.DoubleSide, transparent: true, opacity: 0.85 })
         );
-        broadcastScreen.position.set(0, 15, 0);
+        broadcastScreen.position.set(0, 13.5, 0);
         menaraGroup.add(broadcastScreen);
 
-        // Concentric spinning ring at top
         const broadcastRing = new THREE.Mesh(
-          new THREE.TorusGeometry(3.2, 0.15, 12, 32),
+          new THREE.TorusGeometry(3.0, 0.12, 12, 32),
           new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
         );
-        broadcastRing.position.set(0, 15, 0);
+        broadcastRing.position.set(0, 13.5, 0);
         broadcastRing.rotation.x = Math.PI / 2;
         menaraGroup.add(broadcastRing);
 
@@ -452,7 +471,6 @@ export const World3D: React.FC<World3DProps> = ({
             broadcastRing.rotation.z = t * 1.5;
           },
         });
-
         envGroup.add(menaraGroup);
       } else if (regionId === 'akademi') {
         // ==========================================
@@ -1675,34 +1693,35 @@ export const World3D: React.FC<World3DProps> = ({
       }
     }
 
+    const _camForward = new THREE.Vector3();
+    const _camRight = new THREE.Vector3();
+    const _worldUp = new THREE.Vector3(0, 1, 0);
+    const _moveDir = new THREE.Vector3();
+    const _camTargetPos = new THREE.Vector3();
+
     function animate() {
       const delta = Math.min(clock.getDelta(), 0.08);
       const time = clock.getElapsedTime();
 
-      // Controls Input
+      // Controls Input (Camera-relative screen space)
       const touch = touchMovementRef.current;
       const isShift = keys['shift'] || keys['run'] || isSprintRef.current;
-      const isMoving =
-        touch.dx !== 0 ||
-        touch.dz !== 0 ||
-        keys['w'] ||
-        keys['s'] ||
-        keys['a'] ||
-        keys['d'] ||
-        keys['arrowup'] ||
-        keys['arrowdown'] ||
-        keys['arrowleft'] ||
-        keys['arrowright'];
+
+      // Screen-relative movement components:
+      // touch.dx: negative = screen left, positive = screen right
+      // touch.dz: negative = screen up/forward, positive = screen down/backward
+      let inputX = touch.dx;
+      let inputY = -touch.dz; // Invert dz so up is positive forward
+
+      if (keys['w'] || keys['arrowup']) inputY += 1;
+      if (keys['s'] || keys['arrowdown']) inputY -= 1;
+      if (keys['a'] || keys['arrowleft']) inputX -= 1;
+      if (keys['d'] || keys['arrowright']) inputX += 1;
+
+      const inputDist = Math.hypot(inputX, inputY);
+      const isMoving = inputDist > 0.05;
 
       const moveSpeed = (isShift ? 7.8 : 4.6) * delta;
-
-      let moveX = touch.dx;
-      let moveZ = touch.dz;
-
-      if (keys['w'] || keys['arrowup']) moveZ -= 1;
-      if (keys['s'] || keys['arrowdown']) moveZ += 1;
-      if (keys['a'] || keys['arrowleft']) moveX -= 1;
-      if (keys['d'] || keys['arrowright']) moveX += 1;
 
       // Jumping Physics
       if (isJumping) {
@@ -1728,19 +1747,74 @@ export const World3D: React.FC<World3DProps> = ({
         currentAnimState = 'idle';
       }
 
-      // Movement execution & turning
+      // Movement execution & turning (True camera-relative vector movement)
       if (isMoving) {
-        const inputAngle = Math.atan2(moveX, moveZ);
-        // Relative to camera orientation
-        const totalAngle = inputAngle + cameraAngle;
-        playerGroup.rotation.y = THREE.MathUtils.lerp(playerGroup.rotation.y, totalAngle, 0.2);
+        // 1. Normalize input vector to prevent diagonal speed boost
+        const normX = inputX / inputDist;
+        const normY = inputY / inputDist;
+        const moveMagnitude = Math.min(1, inputDist);
 
-        playerGroup.position.x += Math.sin(totalAngle) * moveSpeed;
-        playerGroup.position.z += Math.cos(totalAngle) * moveSpeed;
+        // 2. Camera-relative forward & right vectors projected onto horizontal XZ plane
+        _camForward.set(0, 0, 0);
+        camera.getWorldDirection(_camForward);
+        _camForward.y = 0;
+        _camForward.normalize();
 
-        // Boundaries
-        playerGroup.position.x = Math.max(-42, Math.min(42, playerGroup.position.x));
-        playerGroup.position.z = Math.max(-42, Math.min(42, playerGroup.position.z));
+        _camRight.crossVectors(_camForward, _worldUp).normalize();
+
+        // 3. Composite world-space movement direction from camera perspective
+        // normX > 0 (Right) moves along +camRight (Screen Right)
+        // normX < 0 (Left) moves along -camRight (Screen Left)
+        // normY > 0 (Up/Forward) moves along +camForward (Screen Forward)
+        // normY < 0 (Down/Backward) moves along -camForward (Screen Backward)
+        _moveDir.set(0, 0, 0);
+        _moveDir.addScaledVector(_camRight, normX);
+        _moveDir.addScaledVector(_camForward, normY);
+        _moveDir.normalize();
+
+        // 4. Smooth character rotation toward movement direction (shortest-arc interpolation)
+        const targetRotation = Math.atan2(_moveDir.x, _moveDir.z);
+        let angleDiff = targetRotation - playerGroup.rotation.y;
+        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+        playerGroup.rotation.y += angleDiff * 0.22;
+
+        // 5. Scaled displacement steps with decoupled wall-sliding building collision
+        const stepX = _moveDir.x * moveSpeed * moveMagnitude;
+        const stepZ = _moveDir.z * moveSpeed * moveMagnitude;
+        const nextX = playerGroup.position.x + stepX;
+        const nextZ = playerGroup.position.z + stepZ;
+
+        const colliders = regionId === 'kota_media' ? getKotaMediaColliders() : [];
+        let blockedX = false;
+        let blockedZ = false;
+        const pRadius = 0.55;
+
+        for (const col of colliders) {
+          if (
+            nextX + pRadius > col.minX &&
+            nextX - pRadius < col.maxX &&
+            playerGroup.position.z + pRadius > col.minZ &&
+            playerGroup.position.z - pRadius < col.maxZ
+          ) {
+            blockedX = true;
+          }
+          if (
+            playerGroup.position.x + pRadius > col.minX &&
+            playerGroup.position.x - pRadius < col.maxX &&
+            nextZ + pRadius > col.minZ &&
+            nextZ - pRadius < col.maxZ
+          ) {
+            blockedZ = true;
+          }
+        }
+
+        if (!blockedX) {
+          playerGroup.position.x = Math.max(-36, Math.min(36, nextX));
+        }
+        if (!blockedZ) {
+          playerGroup.position.z = Math.max(-36, Math.min(36, nextZ));
+        }
 
         // Footstep Audio with surface material detection
         const stepInterval = isShift ? 0.28 : 0.44;
@@ -1876,7 +1950,8 @@ export const World3D: React.FC<World3DProps> = ({
       const targetCamZ = playerGroup.position.z - Math.cos(cameraAngle) * camDist;
       const targetCamY = playerGroup.position.y + camHeight;
 
-      camera.position.lerp(new THREE.Vector3(targetCamX, targetCamY, targetCamZ), 0.09);
+      _camTargetPos.set(targetCamX, targetCamY, targetCamZ);
+      camera.position.lerp(_camTargetPos, 0.09);
       camera.lookAt(playerGroup.position.x, playerGroup.position.y + 1.45, playerGroup.position.z);
 
       // Position active target destination waypoint beam and giant downward arrow
@@ -2053,6 +2128,40 @@ export const World3D: React.FC<World3DProps> = ({
     }
   };
 
+  const handleJoystickPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse') {
+      e.stopPropagation();
+      joystickPointerIdRef.current = e.pointerId;
+      try {
+        (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      } catch {
+        // ignore
+      }
+      updateJoystickFromTouch(e.clientX, e.clientY);
+    }
+  };
+
+  const handleJoystickPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse' && joystickPointerIdRef.current === e.pointerId) {
+      e.stopPropagation();
+      updateJoystickFromTouch(e.clientX, e.clientY);
+    }
+  };
+
+  const handleJoystickPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse' && joystickPointerIdRef.current === e.pointerId) {
+      e.stopPropagation();
+      try {
+        (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+      } catch {
+        // ignore
+      }
+      joystickPointerIdRef.current = null;
+      setJoystickThumb({ x: 0, y: 0 });
+      touchMovementRef.current = { dx: 0, dz: 0 };
+    }
+  };
+
   const handleJoystickTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     e.stopPropagation();
     const touch = e.changedTouches[0];
@@ -2121,6 +2230,10 @@ export const World3D: React.FC<World3DProps> = ({
           >
             <div
               ref={joystickBaseRef}
+              onPointerDown={handleJoystickPointerDown}
+              onPointerMove={handleJoystickPointerMove}
+              onPointerUp={handleJoystickPointerUp}
+              onPointerCancel={handleJoystickPointerUp}
               onTouchStart={handleJoystickTouchStart}
               onTouchMove={handleJoystickTouchMove}
               onTouchEnd={handleJoystickTouchEnd}
