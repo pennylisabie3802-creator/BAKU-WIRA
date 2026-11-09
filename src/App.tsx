@@ -49,6 +49,7 @@ import { AnimatedRegionEntrance } from './components/screens/AnimatedRegionEntra
 // Modals
 import { InventoryModal } from './components/modals/InventoryModal';
 import { LanguageCollectionModal } from './components/modals/LanguageCollectionModal';
+import { RegionMapModal } from './components/modals/RegionMapModal';
 
 // Tutorial System (Part 1)
 import { InteractiveTutorialModal } from './components/tutorial/InteractiveTutorialModal';
@@ -109,6 +110,7 @@ export default function App() {
   const [contentManagerOpen, setContentManagerOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
   const [collectionOpen, setCollectionOpen] = useState(false);
+  const [regionMapOpen, setRegionMapOpen] = useState(false);
   const [heroTransitionData, setHeroTransitionData] = useState<{
     gender: HeroGender;
     name: string;
@@ -785,6 +787,7 @@ export default function App() {
             onChangeHero={handleStartHeroSelection}
             onOpenInventory={() => setInventoryOpen(true)}
             onOpenCollection={() => setCollectionOpen(true)}
+            onOpenRegionMap={() => setRegionMapOpen(true)}
           />
 
           {/* Shortcut to Climax Battle when in Region 5 (Istana Wira Bahasa) */}
@@ -988,6 +991,41 @@ export default function App() {
       {/* ==================================================== */}
       {collectionOpen && (
         <LanguageCollectionModal onClose={() => setCollectionOpen(false)} />
+      )}
+
+      {/* ==================================================== */}
+      {/* REGION 2D TACTICAL MAP MODAL (RegionMapModal)        */}
+      {/* ==================================================== */}
+      {regionMapOpen && activeProfile && (
+        <RegionMapModal
+          currentRegionId={activeProfile.currentRegion}
+          playerCoords={playerCoords}
+          playerRotationY={playerRotationY}
+          profile={activeProfile}
+          activeQuestion={activeQuestion}
+          onClose={() => setRegionMapOpen(false)}
+          onSetDestination={(sublocationId) => {
+            handleSetDestination(sublocationId);
+          }}
+          onFastTravel={(sub, regId) => {
+            const updated = updateActiveProfile((prev) => ({
+              ...prev,
+              currentRegion: regId,
+              currentLocationId: sub.id,
+              currentLocationName: sub.name,
+              targetDestinationId: sub.id,
+              playerCoordinates: sub.coordinates,
+            }));
+            setActiveProfile(updated);
+            setPlayerCoords(sub.coordinates);
+            saveProfileToIndexedDB(updated);
+            setRegionMapOpen(false);
+          }}
+          onOpenWorldMap={() => {
+            setRegionMapOpen(false);
+            setCurrentScreen('world_map');
+          }}
+        />
       )}
 
       {/* ==================================================== */}

@@ -62,6 +62,7 @@ interface GameHUDProps {
   onChangeHero?: () => void;
   onOpenInventory?: () => void;
   onOpenCollection?: () => void;
+  onOpenRegionMap?: () => void;
 }
 
 export const GameHUD: React.FC<GameHUDProps> = ({
@@ -81,6 +82,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
   onChangeHero,
   onOpenInventory,
   onOpenCollection,
+  onOpenRegionMap,
 }) => {
   const [isDockCollapsed, setIsDockCollapsed] = useState(false);
   const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -244,14 +246,24 @@ export const GameHUD: React.FC<GameHUDProps> = ({
                 <span>KEMBALI</span>
               </button>
             )}
-            <div className="hidden sm:flex px-4 py-1 rounded-full bg-slate-950/90 border border-amber-500/60 shadow-[0_0_15px_rgba(250,204,21,0.3)] items-center gap-2 text-xs">
+            <button
+              onClick={() => {
+                soundEffects.playClick();
+                if (onOpenRegionMap) onOpenRegionMap();
+              }}
+              title="Buka Peta Taktikal Wilayah (2D)"
+              className="hidden sm:flex px-4 py-1 rounded-full bg-slate-950/90 hover:bg-slate-900 border border-amber-500/60 shadow-[0_0_15px_rgba(250,204,21,0.3)] items-center gap-2 text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            >
               <Compass className="w-3.5 h-3.5 text-amber-400" />
               <span className="font-bold text-amber-200">{currentRegion.name}</span>
               <span className="text-amber-500/60">•</span>
               <span className="text-white font-medium">
                 {profile.currentLocationName || currentSublocation?.name || 'Dataran Mesej'}
               </span>
-            </div>
+              <span className="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.5 rounded font-black tracking-wider">
+                PETA 2D
+              </span>
+            </button>
           </div>
 
           {/* Dynamic Next Game Directional Guidance Arrow Badge */}
@@ -391,7 +403,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
               completedActivities={profile.completedActivities}
               unlockedLocations={profile.unlockedLocations}
               npcs={nearbyNpcs}
-              onOpenFullMap={onOpenWorldMap}
+              onOpenFullMap={onOpenRegionMap || onOpenWorldMap}
             />
           </div>
         </div>
@@ -577,6 +589,20 @@ export const GameHUD: React.FC<GameHUDProps> = ({
                 >
                   <span>1. KEMBALI KE MOD ILUSTRASI</span>
                   <Sparkles className="w-4 h-4 text-purple-400" />
+                </button>
+              )}
+
+              {/* BUTTON: PETA TAKTIKAL WILAYAH (2D) */}
+              {onOpenRegionMap && (
+                <button
+                  onClick={() => {
+                    setNavMenuOpen(false);
+                    onOpenRegionMap();
+                  }}
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-950/90 to-teal-950/90 hover:from-emerald-900 text-emerald-200 hover:text-white border border-emerald-500/50 font-bold text-xs flex items-center justify-between transition-all transform hover:scale-[1.02] shadow-md"
+                >
+                  <span>✦ PETA TAKTIKAL WILAYAH (2D INTERAKTIF)</span>
+                  <Map className="w-4 h-4 text-emerald-400" />
                 </button>
               )}
 
