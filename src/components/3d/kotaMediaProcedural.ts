@@ -412,71 +412,167 @@ export function createFloatingReactionIcon(
 }
 
 /**
- * Procedural Sakura Tree Model (3-12 parts matching Three.js skill)
+ * Procedural Stylized Anime Sakura Tree (Multi-part organic hierarchy matching Three.js skill)
+ * Features curved organic trunk, flaring roots, 14 cloud-like canopy cushions,
+ * flowering shrub planter base, and fallen petal scatter.
  */
 export function createSakuraTree(): THREE.Group {
   const tree = new THREE.Group();
 
-  // 1. Trunk with roots flare
+  // 1. Organic Curved Trunk with Root Buttresses
   const trunkMat = new THREE.MeshStandardMaterial({
-    color: 0x451a03,
+    color: 0x3d1a08,
     roughness: 0.85,
-    metalness: 0.1,
+    metalness: 0.08,
   });
-  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.6, 4.2, 8), trunkMat);
-  trunk.position.y = 2.1;
-  tree.add(trunk);
 
-  // 2. Secondary branches
-  for (let i = 0; i < 4; i++) {
-    const ang = (i * Math.PI) / 2 + 0.3;
-    const branch = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.28, 2.2, 6), trunkMat);
-    branch.position.set(Math.cos(ang) * 0.45, 3.2, Math.sin(ang) * 0.45);
-    branch.rotation.z = Math.cos(ang) * 0.6;
-    branch.rotation.x = Math.sin(ang) * 0.6;
-    tree.add(branch);
+  // Lower flared trunk base
+  const lowerTrunk = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.75, 2.2, 10), trunkMat);
+  lowerTrunk.position.y = 1.6;
+  lowerTrunk.rotation.z = 0.08;
+  tree.add(lowerTrunk);
+
+  // Upper curved trunk extending into canopy
+  const upperTrunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.44, 2.8, 10), trunkMat);
+  upperTrunk.position.set(0.12, 3.8, -0.05);
+  upperTrunk.rotation.z = -0.12;
+  upperTrunk.rotation.x = 0.06;
+  tree.add(upperTrunk);
+
+  // Root Buttresses flaring into planter soil
+  for (let r = 0; r < 5; r++) {
+    const rootAng = (r * Math.PI * 2) / 5 + 0.2;
+    const root = new THREE.Mesh(new THREE.ConeGeometry(0.18, 1.4, 6), trunkMat);
+    root.position.set(Math.cos(rootAng) * 0.55, 0.9, Math.sin(rootAng) * 0.55);
+    root.rotation.x = Math.sin(rootAng) * 0.4;
+    root.rotation.z = -Math.cos(rootAng) * 0.4;
+    tree.add(root);
   }
 
-  // 3. Foliage Puffs in varied soft pink shades
-  const pinkColors = [0xf472b6, 0xf9a8d4, 0xec4899, 0xfbcfe8];
-  const puffPositions = [
-    [0, 4.8, 0, 1.8],
-    [-1.2, 4.3, 0.8, 1.4],
-    [1.3, 4.4, -0.6, 1.5],
-    [0.7, 4.1, 1.2, 1.3],
-    [-0.9, 4.5, -1.1, 1.4],
-    [0, 5.7, 0, 1.3],
+  // 2. Organic Twisting Canopy Branches
+  const branchConfigs = [
+    { x: -0.4, y: 3.6, z: 0.3, len: 2.2, rotZ: 0.7, rotX: 0.3 },
+    { x: 0.5, y: 3.8, z: -0.2, len: 2.4, rotZ: -0.65, rotX: -0.2 },
+    { x: 0.1, y: 4.2, z: 0.6, len: 2.0, rotZ: 0.1, rotX: 0.75 },
+    { x: -0.2, y: 4.4, z: -0.5, len: 2.1, rotZ: -0.2, rotX: -0.7 },
+    { x: 0.35, y: 4.6, z: 0.4, len: 1.8, rotZ: -0.4, rotX: 0.5 },
   ];
 
-  puffPositions.forEach(([x, y, z, r], idx) => {
+  branchConfigs.forEach((cfg) => {
+    const branch = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.22, cfg.len, 7), trunkMat);
+    branch.position.set(cfg.x, cfg.y, cfg.z);
+    branch.rotation.z = cfg.rotZ;
+    branch.rotation.x = cfg.rotX;
+    tree.add(branch);
+  });
+
+  // 3. Stylized Anime Cloud-Like Canopy Cushions (Layered pastels with varied hues)
+  const foliageTints = [
+    { color: 0xfbcfe8, emissive: 0x831843, rough: 0.55 }, // Soft blush
+    { color: 0xf472b6, emissive: 0x9d174d, rough: 0.5 },  // Radiant rose
+    { color: 0xf9a8d4, emissive: 0x701a75, rough: 0.55 }, // Pastel cherry
+    { color: 0xfff1f2, emissive: 0x9f1239, rough: 0.6 },  // White cherry blossom highlight
+    { color: 0xec4899, emissive: 0xbe185d, rough: 0.48 }, // Rich pink
+  ];
+
+  // Multi-tier cloud cushions arranged in an organic anime silhouette
+  const canopyCushions = [
+    // Core crown
+    { x: 0, y: 6.2, z: 0, rx: 1.6, ry: 1.1, rz: 1.6, matIdx: 3 },
+    { x: 0, y: 5.4, z: 0, rx: 2.2, ry: 1.3, rz: 2.2, matIdx: 1 },
+    // Outward cloud puffs
+    { x: -1.4, y: 4.8, z: 0.8, rx: 1.6, ry: 1.0, rz: 1.4, matIdx: 0 },
+    { x: 1.5, y: 5.1, z: -0.6, rx: 1.7, ry: 1.1, rz: 1.5, matIdx: 2 },
+    { x: 0.8, y: 4.7, z: 1.4, rx: 1.5, ry: 0.95, rz: 1.3, matIdx: 4 },
+    { x: -0.9, y: 5.2, z: -1.3, rx: 1.6, ry: 1.0, rz: 1.4, matIdx: 1 },
+    // Upper crests
+    { x: -0.7, y: 6.5, z: 0.4, rx: 1.2, ry: 0.85, rz: 1.1, matIdx: 3 },
+    { x: 0.6, y: 6.4, z: -0.5, rx: 1.3, ry: 0.9, rz: 1.2, matIdx: 0 },
+    // Lower dangling flowering clusters
+    { x: -1.8, y: 4.0, z: 0.5, rx: 1.1, ry: 0.75, rz: 1.0, matIdx: 1 },
+    { x: 1.7, y: 4.1, z: -0.4, rx: 1.1, ry: 0.75, rz: 1.0, matIdx: 2 },
+    { x: 0.4, y: 3.9, z: 1.6, rx: 1.0, ry: 0.7, rz: 0.9, matIdx: 0 },
+  ];
+
+  canopyCushions.forEach((c) => {
+    const tint = foliageTints[c.matIdx];
     const foliageMat = new THREE.MeshStandardMaterial({
-      color: pinkColors[idx % pinkColors.length],
-      roughness: 0.65,
-      metalness: 0.05,
+      color: tint.color,
+      emissive: tint.emissive,
+      emissiveIntensity: 0.18,
+      roughness: tint.rough,
+      metalness: 0.04,
     });
-    const puff = new THREE.Mesh(new THREE.SphereGeometry(r, 10, 10), foliageMat);
-    puff.position.set(x, y, z);
-    tree.add(puff);
+    const cushionGeo = new THREE.SphereGeometry(1, 14, 12);
+    cushionGeo.scale(c.rx, c.ry, c.rz);
+    const cushionMesh = new THREE.Mesh(cushionGeo, foliageMat);
+    cushionMesh.position.set(c.x, c.y, c.z);
+    tree.add(cushionMesh);
   });
 
-  // 4. Stone planter base
+  // 4. Ornate Octagonal White Marble Planter Base with Gold Filigree
   const planterMat = new THREE.MeshStandardMaterial({
-    color: 0x1e293b,
-    roughness: 0.5,
-    metalness: 0.5,
+    color: 0xf8fafc,
+    roughness: 0.32,
+    metalness: 0.25,
   });
-  const planter = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.8, 0.8, 16), planterMat);
-  planter.position.y = 0.4;
-  tree.add(planter);
+  const planterGoldMat = new THREE.MeshStandardMaterial({
+    color: 0xfacc15,
+    roughness: 0.22,
+    metalness: 0.88,
+  });
 
-  // Gold trim on planter
-  const goldRim = new THREE.Mesh(
-    new THREE.TorusGeometry(1.65, 0.08, 8, 24),
-    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85, roughness: 0.25 })
-  );
-  goldRim.position.y = 0.8;
-  goldRim.rotation.x = Math.PI / 2;
-  tree.add(goldRim);
+  // Octagonal base plinth
+  const planterPlinth = new THREE.Mesh(new THREE.CylinderGeometry(1.85, 2.05, 0.4, 8), planterMat);
+  planterPlinth.position.y = 0.2;
+  tree.add(planterPlinth);
+
+  // Main planter body
+  const planterBody = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.85, 0.6, 8), planterMat);
+  planterBody.position.y = 0.7;
+  tree.add(planterBody);
+
+  // Gold molding rim around upper ledge
+  const goldMolding = new THREE.Mesh(new THREE.CylinderGeometry(1.78, 1.74, 0.1, 8), planterGoldMat);
+  goldMolding.position.y = 1.02;
+  tree.add(goldMolding);
+
+  // Dark enriched planter soil
+  const soilMat = new THREE.MeshStandardMaterial({ color: 0x1f140e, roughness: 0.95 });
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 0.15, 8), soilMat);
+  soil.position.y = 0.96;
+  tree.add(soil);
+
+  // 5. Flowering Shrub Base around Trunk with Colorful Blossoms
+  const shrubGreenMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.65 });
+  const flowerColors = [0xf472b6, 0xa855f7, 0x38bdf8, 0xfacc15];
+
+  for (let s = 0; s < 6; s++) {
+    const ang = (s * Math.PI * 2) / 6 + 0.15;
+    const shrub = new THREE.Mesh(new THREE.SphereGeometry(0.38, 8, 8), shrubGreenMat);
+    shrub.scale.set(1.2, 0.75, 1.1);
+    shrub.position.set(Math.cos(ang) * 0.95, 1.08, Math.sin(ang) * 0.95);
+    tree.add(shrub);
+
+    // Mini flower blossom on shrub
+    const flwMat = new THREE.MeshBasicMaterial({ color: flowerColors[s % flowerColors.length] });
+    const flw = new THREE.Mesh(new THREE.OctahedronGeometry(0.08, 0), flwMat);
+    flw.position.set(Math.cos(ang) * 1.05, 1.25, Math.sin(ang) * 1.05);
+    tree.add(flw);
+  }
+
+  // 6. Fallen Sakura Petal Scatter on Soil
+  for (let p = 0; p < 8; p++) {
+    const pAng = Math.random() * Math.PI * 2;
+    const pDist = 0.6 + Math.random() * 0.8;
+    const petalDecal = new THREE.Mesh(
+      new THREE.CircleGeometry(0.065, 5),
+      new THREE.MeshBasicMaterial({ color: 0xfbcfe8, side: THREE.DoubleSide })
+    );
+    petalDecal.rotation.x = -Math.PI / 2;
+    petalDecal.position.set(Math.cos(pAng) * pDist, 1.04, Math.sin(pAng) * pDist);
+    tree.add(petalDecal);
+  }
 
   return tree;
 }
@@ -666,89 +762,207 @@ export function createStudentNPC(colorHex = 0x4338ca): THREE.Group {
 
 /**
  * Creates Grand Fantasy Cyber Palace Facade at North Plaza
+ * Faithfully captures the majestic anime fantasy castle architecture from the illustrations:
+ * multi-tier gothic spires, golden filigree pinnacles, glowing stained glass,
+ * and grand balustrade terraces.
  */
 export function createGrandPalaceFacade(signTexture: THREE.CanvasTexture): THREE.Group {
   const palace = new THREE.Group();
   palace.position.set(0, 0, -25);
 
-  const whiteStone = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.35, metalness: 0.2 });
-  const palaceGold = new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.9, roughness: 0.2 });
-  const royalViolet = new THREE.MeshStandardMaterial({ color: 0x1e1038, roughness: 0.4, metalness: 0.7 });
-  const cyanGlass = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85 });
+  const whiteStone = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 0.28,
+    metalness: 0.22,
+  });
+  const palaceGold = new THREE.MeshStandardMaterial({
+    color: 0xfacc15,
+    metalness: 0.92,
+    roughness: 0.18,
+  });
+  const royalViolet = new THREE.MeshStandardMaterial({
+    color: 0x1e1038,
+    roughness: 0.35,
+    metalness: 0.65,
+  });
+  const cyanGlass = new THREE.MeshBasicMaterial({
+    color: 0x38bdf8,
+    transparent: true,
+    opacity: 0.88,
+  });
+  const purpleGlass = new THREE.MeshBasicMaterial({
+    color: 0xc084fc,
+    transparent: true,
+    opacity: 0.82,
+  });
 
-  // Main palace foundation block
-  const mainBlock = new THREE.Mesh(new THREE.BoxGeometry(48, 14, 14), whiteStone);
+  // 1. Multi-Tier Foundation & Palace Wings
+  const mainBlock = new THREE.Mesh(new THREE.BoxGeometry(52, 14, 15), whiteStone);
   mainBlock.position.y = 7;
   palace.add(mainBlock);
 
-  // Grand arched entrance recess
-  const portalArch = new THREE.Mesh(new THREE.BoxGeometry(10, 8.5, 3), royalViolet);
-  portalArch.position.set(0, 4.25, 7.1);
+  // Upper recessed palace block
+  const upperBlock = new THREE.Mesh(new THREE.BoxGeometry(40, 9, 12), whiteStone);
+  upperBlock.position.set(0, 18.5, -1);
+  palace.add(upperBlock);
+
+  // Decorative Golden Cornice Ledges
+  const lowerCornice = new THREE.Mesh(new THREE.BoxGeometry(53, 0.8, 15.8), palaceGold);
+  lowerCornice.position.y = 14;
+  palace.add(lowerCornice);
+
+  const upperCornice = new THREE.Mesh(new THREE.BoxGeometry(41, 0.7, 12.8), palaceGold);
+  upperCornice.position.set(0, 23, -1);
+  palace.add(upperCornice);
+
+  // 2. Grand Arched Entrance Recess with Golden Portal Filigree
+  const portalArch = new THREE.Mesh(new THREE.BoxGeometry(11, 9.5, 3.5), royalViolet);
+  portalArch.position.set(0, 4.75, 7.2);
   palace.add(portalArch);
 
-  // Glowing portal gate interior
+  // Glowing Cyber Gate
   const portalGlow = new THREE.Mesh(
-    new THREE.PlaneGeometry(8, 7.5),
-    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85 })
+    new THREE.PlaneGeometry(8.5, 8.5),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.88 })
   );
-  portalGlow.position.set(0, 4.25, 8.65);
+  portalGlow.position.set(0, 4.75, 8.8);
   palace.add(portalGlow);
 
-  // Grand Entrance Staircase
-  const stairSteps = 6;
+  // Gold Arch Trim on Portal
+  const portalArchTrim = new THREE.Mesh(
+    new THREE.TorusGeometry(4.4, 0.25, 8, 20, Math.PI),
+    palaceGold
+  );
+  portalArchTrim.position.set(0, 4.75, 8.85);
+  palace.add(portalArchTrim);
+
+  // 3. Grand Entrance Marble Staircase
+  const stairSteps = 7;
   for (let s = 0; s < stairSteps; s++) {
     const step = new THREE.Mesh(
-      new THREE.BoxGeometry(14 + (stairSteps - s) * 0.8, 0.35, 1.2),
+      new THREE.BoxGeometry(15 + (stairSteps - s) * 0.9, 0.35, 1.2),
       whiteStone
     );
-    step.position.set(0, s * 0.35 + 0.175, 8.5 + (stairSteps - s) * 0.7);
+    step.position.set(0, s * 0.35 + 0.175, 8.6 + (stairSteps - s) * 0.75);
     palace.add(step);
   }
 
-  // Central Grand Spire (Height 32 units)
-  const centralTower = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 3.2, 16, 16), whiteStone);
-  centralTower.position.set(0, 20, 0);
-  palace.add(centralTower);
+  // 4. Balustrades along 1st & 2nd Floor Terraces
+  for (let b = -24; b <= 24; b += 2.4) {
+    if (Math.abs(b) < 6) continue; // Skip above portal
+    const baluster = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 1.1, 8), whiteStone);
+    baluster.position.set(b, 14.8, 7.6);
+    palace.add(baluster);
 
-  const centralSpire = new THREE.Mesh(new THREE.ConeGeometry(3.2, 12, 16), palaceGold);
-  centralSpire.position.set(0, 32, 0);
+    const miniFinial = new THREE.Mesh(new THREE.OctahedronGeometry(0.14, 0), palaceGold);
+    miniFinial.position.set(b, 15.5, 7.6);
+    palace.add(miniFinial);
+  }
+
+  // 5. Arched Stained Glass Windows Across Palace Facade
+  for (let wx = -22; wx <= 22; wx += 5.5) {
+    if (Math.abs(wx) < 6) continue; // Skip portal area
+    // Lower level windows
+    const winFrame = new THREE.Mesh(new THREE.BoxGeometry(2.4, 4.4, 0.4), royalViolet);
+    winFrame.position.set(wx, 6.5, 7.6);
+    palace.add(winFrame);
+
+    const winGlass = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.8, 3.8),
+      Math.abs(wx) % 2 === 0 ? cyanGlass : purpleGlass
+    );
+    winGlass.position.set(wx, 6.5, 7.82);
+    palace.add(winGlass);
+
+    // Pointed Gothic Window Hood
+    const winHood = new THREE.Mesh(new THREE.ConeGeometry(1.3, 1.4, 4), palaceGold);
+    winHood.position.set(wx, 9.2, 7.8);
+    palace.add(winHood);
+
+    // Upper level windows
+    if (Math.abs(wx) <= 18) {
+      const upWin = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 3.2), cyanGlass);
+      upWin.position.set(wx, 18.5, 5.05);
+      palace.add(upWin);
+    }
+  }
+
+  // 6. Central Grand Spire & Clockwork Dome (Matching Illustration Spire)
+  const centralBase = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 4.0, 10, 16), whiteStone);
+  centralBase.position.set(0, 24, 0);
+  palace.add(centralBase);
+
+  const centralSpire = new THREE.Mesh(new THREE.ConeGeometry(3.6, 16, 16), palaceGold);
+  centralSpire.position.set(0, 37, 0);
   palace.add(centralSpire);
 
-  // Crown Starburst Crystal atop main spire
+  // Crown Starburst Crystal Beacon atop main spire
   const starburst = new THREE.Mesh(
-    new THREE.OctahedronGeometry(1.2, 0),
+    new THREE.OctahedronGeometry(1.4, 0),
     new THREE.MeshBasicMaterial({ color: 0x67e8f9 })
   );
-  starburst.position.set(0, 38.5, 0);
+  starburst.position.set(0, 45.5, 0);
   palace.add(starburst);
 
-  // Flanking Towers (Left & Right)
-  [-16, 16, -9, 9].forEach((x, idx) => {
-    const height = Math.abs(x) > 12 ? 22 : 26;
-    const towerBody = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 2.2, height, 12), whiteStone);
-    towerBody.position.set(x, height / 2 + 3, 2);
+  // Glowing Holographic Wifi Arches over Central Spire (matching logo in illustration)
+  for (let w = 1; w <= 3; w++) {
+    const wifiArch = new THREE.Mesh(
+      new THREE.TorusGeometry(w * 1.4, 0.16, 6, 16, Math.PI),
+      new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.9 })
+    );
+    wifiArch.position.set(0, 22.5 + w * 1.5, 5.2);
+    palace.add(wifiArch);
+  }
+
+  // 7. Flanking Gothic Towers with Needle Pinnacles (Left & Right)
+  [-21, 21, -12, 12].forEach((x, idx) => {
+    const isOuter = Math.abs(x) > 16;
+    const height = isOuter ? 24 : 29;
+    const towerBody = new THREE.Mesh(new THREE.CylinderGeometry(2.0, 2.5, height, 14), whiteStone);
+    towerBody.position.set(x, height / 2 + 3, 2.5);
     palace.add(towerBody);
 
-    const towerRoof = new THREE.Mesh(new THREE.ConeGeometry(2.4, 7, 12), idx % 2 === 0 ? palaceGold : royalViolet);
-    towerRoof.position.set(x, height + 6.5, 2);
-    palace.add(towerRoof);
+    // Decorative tower belt rings
+    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.15, 6, 14), palaceGold);
+    ring1.rotation.x = Math.PI / 2;
+    ring1.position.set(x, height * 0.5, 2.5);
+    palace.add(ring1);
+
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.05, 0.15, 6, 14), palaceGold);
+    ring2.rotation.x = Math.PI / 2;
+    ring2.position.set(x, height * 0.85, 2.5);
+    palace.add(ring2);
+
+    // Pointed Spire Roof
+    const spireRoof = new THREE.Mesh(new THREE.ConeGeometry(2.6, 9.5, 14), idx % 2 === 0 ? palaceGold : royalViolet);
+    spireRoof.position.set(x, height + 7.7, 2.5);
+    palace.add(spireRoof);
+
+    // Golden Needle Pinnacle on top of each tower
+    const pinnacle = new THREE.Mesh(new THREE.ConeGeometry(0.35, 3.2, 8), palaceGold);
+    pinnacle.position.set(x, height + 13.5, 2.5);
+    palace.add(pinnacle);
+
+    const pinCrystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.45, 0), cyanGlass);
+    pinCrystal.position.set(x, height + 15.2, 2.5);
+    palace.add(pinCrystal);
 
     // Glowing vertical window slots
-    for (let w = 6; w < height; w += 5) {
-      const winSlot = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 2.8), cyanGlass);
-      winSlot.position.set(x, w, 4.22);
+    for (let w = 8; w < height - 2; w += 5) {
+      const winSlot = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 3.2), cyanGlass);
+      winSlot.position.set(x, w, 4.65);
       palace.add(winSlot);
     }
   });
 
-  // Royal Golden Signboard Plaque: "Kota Media Sosial"
+  // 8. Royal Golden Signboard Plaque: "Kota Media Sosial"
   const signMat = new THREE.MeshBasicMaterial({
     map: signTexture,
     transparent: true,
     side: THREE.DoubleSide,
   });
   const signBoard = new THREE.Mesh(new THREE.PlaneGeometry(16, 5.0), signMat);
-  signBoard.position.set(0, 13.5, 7.3);
+  signBoard.position.set(0, 13.8, 7.8);
   palace.add(signBoard);
 
   // Floating Sky Sanctums behind the palace (Matching Illustration Sky)
