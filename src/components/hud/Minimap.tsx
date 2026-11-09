@@ -32,8 +32,8 @@ export const Minimap: React.FC<MinimapProps> = ({
   npcs,
   onOpenFullMap,
 }) => {
-  // Minimap radius in 3D world units
-  const mapRange = 36;
+  // Minimap radius in 3D world units (expanded to cover connected districts)
+  const mapRange = 52;
   const mapSize = 130; // px
   const center = mapSize / 2;
 

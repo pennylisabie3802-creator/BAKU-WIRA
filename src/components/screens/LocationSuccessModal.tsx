@@ -138,7 +138,7 @@ export const LocationSuccessModal: React.FC<LocationSuccessModalProps> = ({
                 ? 'MULAKAN CABARAN PENAMAT (MISI 21)'
                 : question.id === 'BW-M21'
                 ? 'LIHAT PENAMAT BAKUWIRA'
-                : 'TERUSKAN KE TEMPAT SETERUSNYA'}
+                : 'TERUSKAN KE LOKASI SETERUSNYA'}
             </span>
             <ArrowRight className="w-4 h-4 stroke-[3]" />
           </button>

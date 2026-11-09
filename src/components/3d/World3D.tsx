@@ -22,6 +22,12 @@ import {
   createStudentNPC,
   createGrandPalaceFacade,
   createCentralHoloPavilion,
+  createCrossroadDirectionalSignposts,
+  createWestFantasyBridge,
+  createPusatKomunikasiDistrict,
+  createEastSakuraGardenAndPromenade,
+  createLorongSingkatanDistrict,
+  createMenaraHologramDistrict,
   getKotaMediaColliders,
 } from './kotaMediaProcedural';
 
@@ -60,6 +66,32 @@ export const World3D: React.FC<World3DProps> = ({
   const joystickTouchIdRef = useRef<number | null>(null);
   const joystickPointerIdRef = useRef<number | null>(null);
   const [showTouchControls, setShowTouchControls] = useState(true);
+  const [isJoystickActive, setIsJoystickActive] = useState(true);
+  const joystickFadeTimerRef = useRef<number | null>(null);
+
+  const notifyJoystickActivity = () => {
+    setIsJoystickActive(true);
+    if (joystickFadeTimerRef.current !== null) {
+      window.clearTimeout(joystickFadeTimerRef.current);
+    }
+    joystickFadeTimerRef.current = window.setTimeout(() => {
+      if (joystickTouchIdRef.current === null && joystickPointerIdRef.current === null) {
+        setIsJoystickActive(false);
+      }
+    }, 1800);
+  };
+
+  useEffect(() => {
+    // Show initially for 2.5s then fade gently to idle opacity
+    joystickFadeTimerRef.current = window.setTimeout(() => {
+      setIsJoystickActive(false);
+    }, 2500);
+    return () => {
+      if (joystickFadeTimerRef.current !== null) {
+        window.clearTimeout(joystickFadeTimerRef.current);
+      }
+    };
+  }, []);
 
   // Detect touch device or mobile/compact landscape screen
   useEffect(() => {
@@ -347,12 +379,12 @@ export const World3D: React.FC<World3DProps> = ({
           },
         });
 
-        // 10. The 4 Canonical Sublocations & NPC Mission Points
+        // 10. The 4 Expanded Canonical Sublocations & Connected Districts
         // ----------------------------------------------------
-        // Dataran Mesej ([0, 0, 0]) - Central Mission Runic Hub (Puan Zahra)
+        // 10A. Dataran Mesej ([0, 0, 0]) - Central Mission Runic Hub & Crossroads Signposts
         const dataranHubRing = new THREE.Mesh(
-          new THREE.TorusGeometry(2.4, 0.08, 8, 32),
-          new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.85 })
+          new THREE.TorusGeometry(3.2, 0.1, 8, 36),
+          new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.9 })
         );
         dataranHubRing.rotation.x = Math.PI / 2;
         dataranHubRing.position.set(0, 0.05, 0);
@@ -365,113 +397,47 @@ export const World3D: React.FC<World3DProps> = ({
           },
         });
 
-        // Pusat Komunikasi ([-12, 0, 10]) - Digital Messaging Hub (Adik Amir)
-        const pusatGroup = new THREE.Group();
-        pusatGroup.position.set(-12, 0, 10);
+        // Directional crossroad signpost at Dataran Mesej crossroads [0, 0, 5]
+        const crossroadsSign = createCrossroadDirectionalSignposts();
+        envGroup.add(crossroadsSign);
 
-        const pusatPlatform = new THREE.Mesh(
-          new THREE.CylinderGeometry(4.2, 4.6, 0.5, 16),
-          new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.3, metalness: 0.7 })
-        );
-        pusatPlatform.position.y = 0.25;
-        pusatGroup.add(pusatPlatform);
+        // 10B. West Fantasy Bridge over Canal leading to Pusat Komunikasi
+        const westBridge = createWestFantasyBridge();
+        envGroup.add(westBridge);
 
-        const terminalPod = new THREE.Mesh(
-          new THREE.BoxGeometry(2.8, 2.2, 1.8),
-          new THREE.MeshStandardMaterial({ color: 0x312e81, roughness: 0.3, metalness: 0.6 })
-        );
-        terminalPod.position.y = 1.35;
-        pusatGroup.add(terminalPod);
-
-        const pusatScreen = new THREE.Mesh(
-          new THREE.PlaneGeometry(2.4, 1.4),
-          new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.85 })
-        );
-        pusatScreen.position.set(0, 2.7, 0);
-        pusatGroup.add(pusatScreen);
-
-        const antennaMast = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.1, 0.1, 3.2, 8),
-          new THREE.MeshStandardMaterial({ color: 0xa5b4fc, metalness: 0.8 })
-        );
-        antennaMast.position.set(1.1, 3.4, 0);
-        pusatGroup.add(antennaMast);
-        envGroup.add(pusatGroup);
-
-        // Lorong Singkatan ([14, 0, 12]) - Cyber Alley & Decode Pillars (Detektif Siber)
-        const lorongGroup = new THREE.Group();
-        lorongGroup.position.set(14, 0, 12);
-
-        for (const archX of [-2.2, 2.2]) {
-          const archPillar = new THREE.Mesh(
-            new THREE.BoxGeometry(0.65, 4.5, 0.65),
-            new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.8 })
-          );
-          archPillar.position.set(archX, 2.25, 0);
-          lorongGroup.add(archPillar);
-        }
-        const archTop = new THREE.Mesh(
-          new THREE.BoxGeometry(5.0, 0.6, 0.65),
-          new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.8 })
-        );
-        archTop.position.set(0, 4.5, 0);
-        lorongGroup.add(archTop);
-
-        const holoSign = new THREE.Mesh(
-          new THREE.PlaneGeometry(3.6, 1.3),
-          new THREE.MeshBasicMaterial({ color: 0x22d3ee, side: THREE.DoubleSide, transparent: true, opacity: 0.9 })
-        );
-        holoSign.position.set(0, 3.2, 0);
-        lorongGroup.add(holoSign);
-
-        animatedObjects.push({
-          mesh: holoSign,
-          update: (t) => {
-            holoSign.position.y = 3.2 + Math.sin(t * 2.5) * 0.15;
-          },
+        // 10C. Pusat Komunikasi District ([-28, 0, 8]) - Digital Messaging Hub (Adik Amir)
+        const pusatDistrict = createPusatKomunikasiDistrict();
+        envGroup.add(pusatDistrict.group);
+        pusatDistrict.animatedList.forEach((anim) => {
+          animatedObjects.push({
+            mesh: anim.mesh,
+            update: (t) => anim.update(t, 0.016),
+          });
         });
-        envGroup.add(lorongGroup);
 
-        // Menara Hologram ([0, 0, -18]) - Broadcast Spire (Pengurus Menara)
-        const menaraGroup = new THREE.Group();
-        menaraGroup.position.set(0, 0, -18);
+        // 10D. East Sakura Garden & Promenade leading to Lorong Singkatan
+        const eastSakuraWalk = createEastSakuraGardenAndPromenade();
+        envGroup.add(eastSakuraWalk);
 
-        const menaraBase = new THREE.Mesh(
-          new THREE.CylinderGeometry(3.2, 3.8, 1.8, 16),
-          new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3, metalness: 0.8 })
-        );
-        menaraBase.position.y = 0.9;
-        menaraGroup.add(menaraBase);
-
-        const menaraSpire = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.5, 1.4, 16, 12),
-          new THREE.MeshStandardMaterial({ color: 0x4f46e5, roughness: 0.25, metalness: 0.75 })
-        );
-        menaraSpire.position.y = 9.8;
-        menaraGroup.add(menaraSpire);
-
-        const broadcastScreen = new THREE.Mesh(
-          new THREE.PlaneGeometry(8, 4.5),
-          new THREE.MeshBasicMaterial({ color: 0xa855f7, side: THREE.DoubleSide, transparent: true, opacity: 0.85 })
-        );
-        broadcastScreen.position.set(0, 13.5, 0);
-        menaraGroup.add(broadcastScreen);
-
-        const broadcastRing = new THREE.Mesh(
-          new THREE.TorusGeometry(3.0, 0.12, 12, 32),
-          new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
-        );
-        broadcastRing.position.set(0, 13.5, 0);
-        broadcastRing.rotation.x = Math.PI / 2;
-        menaraGroup.add(broadcastRing);
-
-        animatedObjects.push({
-          mesh: broadcastRing,
-          update: (t) => {
-            broadcastRing.rotation.z = t * 1.5;
-          },
+        // 10E. Lorong Singkatan District ([28, 0, 10]) - Cyber Alley & Decode Pillars (Detektif Siber)
+        const lorongDistrict = createLorongSingkatanDistrict();
+        envGroup.add(lorongDistrict.group);
+        lorongDistrict.animatedList.forEach((anim) => {
+          animatedObjects.push({
+            mesh: anim.mesh,
+            update: (t) => anim.update(t, 0.016),
+          });
         });
-        envGroup.add(menaraGroup);
+
+        // 10F. Menara Hologram District ([0, 0, -32]) - 35m Celestial Broadcast Spire (Pengurus Menara)
+        const menaraDistrict = createMenaraHologramDistrict();
+        envGroup.add(menaraDistrict.group);
+        menaraDistrict.animatedList.forEach((anim) => {
+          animatedObjects.push({
+            mesh: anim.mesh,
+            update: (t) => anim.update(t, 0.016),
+          });
+        });
       } else if (regionId === 'akademi') {
         // ==========================================
         // REGION 2: AKADEMI DETEKTIF BAHASA (Illustration 2)
@@ -1189,8 +1155,26 @@ export const World3D: React.FC<World3DProps> = ({
     // ----------------------------------------------------
     // BUILD LIVING 3D PLAYER AVATAR (Wira Lelaki & Wira Perempuan)
     // ----------------------------------------------------
+    // Safe player spawning according to current location / sublocation
+    let spawnX = 0;
+    let spawnZ = 4;
+    if (regionId === 'kota_media' && currentSublocation) {
+      if (currentSublocation.id === 'W01-L02') {
+        spawnX = -24;
+        spawnZ = 8;
+      } else if (currentSublocation.id === 'W01-L03') {
+        spawnX = 24;
+        spawnZ = 10;
+      } else if (currentSublocation.id === 'W01-L04') {
+        spawnX = 0;
+        spawnZ = -26;
+      } else {
+        spawnX = 0;
+        spawnZ = 4;
+      }
+    }
     const playerGroup = new THREE.Group();
-    playerGroup.position.set(0, 0, 4);
+    playerGroup.position.set(spawnX, 0, spawnZ);
     scene.add(playerGroup);
 
     const isFemale = avatar.gender === 'perempuan';
@@ -1478,10 +1462,10 @@ export const World3D: React.FC<World3DProps> = ({
     // ----------------------------------------------------
     const npcs: { group: THREE.Group; name: string; pos: THREE.Vector3 }[] = [];
     const npcList = [
-      { name: 'Puan Zahra', role: 'Guru Pembimbing', x: 0, z: -4, color: 0xec4899, region: 'kota_media' },
-      { name: 'Adik Amir', role: 'Murid Sekolah', x: -12, z: 10, color: 0x8b5cf6, region: 'kota_media' },
-      { name: 'Detektif Siber', role: 'Pemeriksa Kod', x: 14, z: 12, color: 0x06b6d4, region: 'kota_media' },
-      { name: 'Pengurus Menara', role: 'Pengurus Siaran', x: 0, z: -18, color: 0x3b82f6, region: 'kota_media' },
+      { name: 'Puan Zahra', role: 'Guru Pembimbing', x: 0, z: -3, color: 0xec4899, region: 'kota_media' },
+      { name: 'Adik Amir', role: 'Murid Sekolah', x: -28, z: 8, color: 0x8b5cf6, region: 'kota_media' },
+      { name: 'Detektif Siber', role: 'Pemeriksa Kod', x: 28, z: 10, color: 0x06b6d4, region: 'kota_media' },
+      { name: 'Pengurus Menara', role: 'Pengurus Siaran', x: 0, z: -32, color: 0x3b82f6, region: 'kota_media' },
 
       { name: 'Puan Zahra', role: 'Ketua Pengajar', x: 0, z: -4, color: 0xec4899, region: 'akademi' },
       { name: 'Detektif Aiman', role: 'Penjaga Arkib', x: -10, z: 8, color: 0x0ea5e9, region: 'akademi' },
@@ -1570,6 +1554,10 @@ export const World3D: React.FC<World3DProps> = ({
     const onKeyDown = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       keys[k] = true;
+
+      if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift', ' '].includes(k)) {
+        notifyJoystickActivity();
+      }
 
       if (k === 'e') {
         checkInteraction();
@@ -1810,10 +1798,13 @@ export const World3D: React.FC<World3DProps> = ({
         }
 
         if (!blockedX) {
-          playerGroup.position.x = Math.max(-36, Math.min(36, nextX));
+          const maxBoundX = regionId === 'kota_media' ? 42 : 36;
+          playerGroup.position.x = Math.max(-maxBoundX, Math.min(maxBoundX, nextX));
         }
         if (!blockedZ) {
-          playerGroup.position.z = Math.max(-36, Math.min(36, nextZ));
+          const minBoundZ = regionId === 'kota_media' ? -44 : -36;
+          const maxBoundZ = regionId === 'kota_media' ? 36 : 36;
+          playerGroup.position.z = Math.max(minBoundZ, Math.min(maxBoundZ, nextZ));
         }
 
         // Footstep Audio with surface material detection
@@ -2126,6 +2117,7 @@ export const World3D: React.FC<World3DProps> = ({
     } else {
       touchMovementRef.current = { dx: 0, dz: 0 };
     }
+    notifyJoystickActivity();
   };
 
   const handleJoystickPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -2137,6 +2129,7 @@ export const World3D: React.FC<World3DProps> = ({
       } catch {
         // ignore
       }
+      notifyJoystickActivity();
       updateJoystickFromTouch(e.clientX, e.clientY);
     }
   };
@@ -2144,6 +2137,7 @@ export const World3D: React.FC<World3DProps> = ({
   const handleJoystickPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'mouse' && joystickPointerIdRef.current === e.pointerId) {
       e.stopPropagation();
+      notifyJoystickActivity();
       updateJoystickFromTouch(e.clientX, e.clientY);
     }
   };
@@ -2159,6 +2153,7 @@ export const World3D: React.FC<World3DProps> = ({
       joystickPointerIdRef.current = null;
       setJoystickThumb({ x: 0, y: 0 });
       touchMovementRef.current = { dx: 0, dz: 0 };
+      notifyJoystickActivity();
     }
   };
 
@@ -2166,12 +2161,14 @@ export const World3D: React.FC<World3DProps> = ({
     e.stopPropagation();
     const touch = e.changedTouches[0];
     joystickTouchIdRef.current = touch.identifier;
+    notifyJoystickActivity();
     updateJoystickFromTouch(touch.clientX, touch.clientY);
   };
 
   const handleJoystickTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (joystickTouchIdRef.current === null) return;
+    notifyJoystickActivity();
     for (let i = 0; i < e.changedTouches.length; i++) {
       const touch = e.changedTouches[i];
       if (touch.identifier === joystickTouchIdRef.current) {
@@ -2189,12 +2186,14 @@ export const World3D: React.FC<World3DProps> = ({
         joystickTouchIdRef.current = null;
         setJoystickThumb({ x: 0, y: 0 });
         touchMovementRef.current = { dx: 0, dz: 0 };
+        notifyJoystickActivity();
         break;
       }
     }
   };
 
   const toggleSprint = () => {
+    notifyJoystickActivity();
     const next = !isSprintActive;
     setIsSprintActive(next);
     isSprintRef.current = next;
@@ -2223,9 +2222,13 @@ export const World3D: React.FC<World3DProps> = ({
       {/* Mobile Virtual Controls (Shown on touch devices / mobile landscape viewports) */}
       {showTouchControls && (
         <>
-          {/* 1. Left: Movement Virtual Analog Joystick matching Image F & G */}
+          {/* 1. Left: Movement Virtual Analog Joystick with Dynamic Opacity (Fades slightly when idle) */}
           <div
-            className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-20 pointer-events-auto select-none touch-none"
+            className={`absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-20 pointer-events-auto select-none touch-none transition-all duration-500 ease-in-out ${
+              isJoystickActive
+                ? 'opacity-100 scale-100'
+                : 'opacity-35 hover:opacity-100 scale-95'
+            }`}
             style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
           >
             <div

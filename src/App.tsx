@@ -551,24 +551,23 @@ export default function App() {
     if (!locationSuccessData.nextSublocation) return;
     const nextSub = locationSuccessData.nextSublocation;
 
-    // Trigger smooth transition animation (Part 9)
+    // Trigger smooth transition notification / guide
     setTransitionData({
       title: nextSub.name,
-      subtitle: `MENUJU KE SUBLOKASI SETERUSNYA (${nextSub.order}/4)`,
+      subtitle: `MENUJU KE LOKASI SETERUSNYA (${nextSub.order}/4)`,
       educationalTip:
-        'Sentiasa perhatikan laras bahasa yang tepat mengikut situasi dan penutur.',
+        'Ikuti rasuk cahaya waypoint dan anak panah penunjuk arah untuk berjalan ke lokasi seterusnya.',
       onComplete: () => {
         setTransitionData(null);
-        // Position player at next objective spawn point
+        // Save progress & set target destination for 3D world navigation
         const updated = updateActiveProfile((prev) => ({
           ...prev,
           currentLocationId: nextSub.id,
           currentLocationName: nextSub.name,
           targetDestinationId: nextSub.id,
-          playerCoordinates: nextSub.coordinates,
         }));
         setActiveProfile(updated);
-        setPlayerCoords(nextSub.coordinates);
+        saveProfileToIndexedDB(updated);
       },
     });
   };

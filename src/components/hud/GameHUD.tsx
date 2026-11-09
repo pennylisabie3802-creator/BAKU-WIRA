@@ -229,14 +229,29 @@ export const GameHUD: React.FC<GameHUDProps> = ({
         {/* Directly guides the player to the next game        */}
         {/* -------------------------------------------------- */}
         <div className="flex flex-col items-center gap-1.5 pointer-events-auto">
-          {/* Region and Location Pill */}
-          <div className="hidden sm:flex px-4 py-1 rounded-full bg-slate-950/90 border border-amber-500/60 shadow-[0_0_15px_rgba(250,204,21,0.3)] items-center gap-2 text-xs">
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-bold text-amber-200">{currentRegion.name}</span>
-            <span className="text-amber-500/60">•</span>
-            <span className="text-white font-medium">
-              {profile.currentLocationName || currentSublocation?.name || 'Dataran Mesej'}
-            </span>
+          {/* Region and Location Pill with KEMBALI button */}
+          <div className="flex items-center gap-2">
+            {onReturnToRegionEntrance && (
+              <button
+                onClick={() => {
+                  soundEffects.playClick();
+                  onReturnToRegionEntrance();
+                }}
+                title="Kembali ke Ilustrasi Wilayah"
+                className="px-3 py-1 rounded-full bg-slate-950/90 hover:bg-purple-950 text-purple-200 hover:text-white border border-purple-400/80 shadow-[0_0_12px_rgba(168,85,247,0.4)] flex items-center gap-1 text-[11px] font-black transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>◀</span>
+                <span>KEMBALI</span>
+              </button>
+            )}
+            <div className="hidden sm:flex px-4 py-1 rounded-full bg-slate-950/90 border border-amber-500/60 shadow-[0_0_15px_rgba(250,204,21,0.3)] items-center gap-2 text-xs">
+              <Compass className="w-3.5 h-3.5 text-amber-400" />
+              <span className="font-bold text-amber-200">{currentRegion.name}</span>
+              <span className="text-amber-500/60">•</span>
+              <span className="text-white font-medium">
+                {profile.currentLocationName || currentSublocation?.name || 'Dataran Mesej'}
+              </span>
+            </div>
           </div>
 
           {/* Dynamic Next Game Directional Guidance Arrow Badge */}

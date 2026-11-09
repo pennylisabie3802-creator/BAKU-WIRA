@@ -977,19 +977,882 @@ export function createCentralHoloPavilion(
 }
 
 /**
- * Returns solid collision boxes for Kota Media Sosial
+ * Procedural Canvas Texture: Directional Crossroad Sign Plaque
+ */
+export function createDirectionSignTexture(text: string, direction: 'left' | 'right' | 'up' | 'down'): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 140;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+
+  const grad = ctx.createLinearGradient(0, 0, 512, 140);
+  grad.addColorStop(0, '#110c2a');
+  grad.addColorStop(0.5, '#241447');
+  grad.addColorStop(1, '#110c2a');
+  ctx.fillStyle = grad;
+  ctx.roundRect(10, 10, 492, 120, 24);
+  ctx.fill();
+
+  ctx.strokeStyle = '#facc15';
+  ctx.lineWidth = 4;
+  ctx.roundRect(10, 10, 492, 120, 24);
+  ctx.stroke();
+
+  // Glow cyan border
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = 2;
+  ctx.roundRect(16, 16, 480, 108, 18);
+  ctx.stroke();
+
+  // Arrow symbol
+  ctx.fillStyle = '#facc15';
+  ctx.font = 'bold 36px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const arrows = {
+    left: '◀',
+    right: '▶',
+    up: '▲',
+    down: '▼',
+  };
+
+  const arrow = arrows[direction] || '★';
+
+  if (direction === 'left') {
+    ctx.fillText(arrow, 50, 70);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, 90, 70);
+  } else if (direction === 'right') {
+    ctx.fillText(arrow, 460, 70);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(text, 420, 70);
+  } else {
+    ctx.fillText(arrow, 50, 70);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, 90, 70);
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Procedural Canvas Texture: Cyber Acronym Decode Billboard
+ */
+export function createAcronymBillboardTexture(acronym: string, baku: string, note: string): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+
+  // Cyber dark glass background
+  ctx.fillStyle = '#090d16';
+  ctx.fillRect(0, 0, 512, 256);
+
+  // Glowing neon frame
+  ctx.strokeStyle = '#06b6d4';
+  ctx.lineWidth = 6;
+  ctx.strokeRect(12, 12, 488, 232);
+
+  ctx.strokeStyle = '#f43f5e';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(18, 18, 476, 220);
+
+  // Header tag
+  ctx.fillStyle = '#f43f5e';
+  ctx.font = '900 18px sans-serif';
+  ctx.fillText('⚡ NYAHKOD SINGKATAN SIBER', 32, 50);
+
+  // Slang / Acronym (Red warning)
+  ctx.fillStyle = '#fb7185';
+  ctx.font = 'bold 36px monospace';
+  ctx.fillText(`"${acronym}"`, 32, 105);
+
+  // Arrow down
+  ctx.fillStyle = '#38bdf8';
+  ctx.font = 'bold 26px sans-serif';
+  ctx.fillText('➔ BAHASA BAKU:', 32, 150);
+
+  // Baku Melayu translation (Emerald green)
+  ctx.fillStyle = '#34d399';
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillText(baku, 32, 195);
+
+  // Small context note
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = 'italic 16px sans-serif';
+  ctx.fillText(note, 32, 228);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Procedural Canvas Texture: Menara Hologram Royal Broadcast Display
+ */
+export function createBroadcastBillboardTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+
+  const grad = ctx.createLinearGradient(0, 0, 1024, 512);
+  grad.addColorStop(0, '#1e1b4b');
+  grad.addColorStop(0.5, '#311042');
+  grad.addColorStop(1, '#0f172a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1024, 512);
+
+  // Hologram grid
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
+  ctx.lineWidth = 2;
+  for (let x = 0; x < 1024; x += 48) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, 512);
+    ctx.stroke();
+  }
+  for (let y = 0; y < 512; y += 48) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(1024, y);
+    ctx.stroke();
+  }
+
+  // Border
+  ctx.strokeStyle = '#facc15';
+  ctx.lineWidth = 10;
+  ctx.strokeRect(15, 15, 994, 482);
+
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(25, 25, 974, 462);
+
+  // Spire Badge Header
+  ctx.fillStyle = '#facc15';
+  ctx.font = '900 36px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('📡 MENARA HOLOGRAM KOTA MEDIA SOSIAL', 512, 85);
+
+  ctx.fillStyle = '#38bdf8';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.fillText('GELOMBANG PENYIARAN RASMI KERAJAAN BAKUWIRA', 512, 130);
+
+  // Big Banner Card
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+  ctx.roundRect(60, 170, 904, 280, 24);
+  ctx.fill();
+  ctx.strokeStyle = '#a855f7';
+  ctx.lineWidth = 3;
+  ctx.roundRect(60, 170, 904, 280, 24);
+  ctx.stroke();
+
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'bold 30px sans-serif';
+  ctx.fillText('PROGRAM MEMBACA DIGITAL (MISI 04)', 512, 230);
+
+  ctx.fillStyle = '#fde047';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.fillText('Masa: Esok, 8.00 pagi  |  Tempat: Makmal Komputer', 512, 290);
+
+  ctx.fillStyle = '#38bdf8';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.fillText('Ajakan: Marilah kita menyertai program ini untuk memartabatkan bahasa!', 512, 350);
+
+  ctx.fillStyle = '#a855f7';
+  ctx.font = 'italic 20px sans-serif';
+  ctx.fillText('Sampaikan pengumuman ini secara langsung bersama Pengurus Menara!', 512, 410);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Creates the Central Crossroads Directional Signpost
+ */
+export function createCrossroadDirectionalSignposts(): THREE.Group {
+  const postGroup = new THREE.Group();
+  postGroup.position.set(0, 0, 5);
+
+  // Stone base pedestal
+  const baseMesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.55, 0.7, 0.6, 8),
+    new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.6 })
+  );
+  baseMesh.position.y = 0.3;
+  postGroup.add(baseMesh);
+
+  // Golden fluted pillar post
+  const pillar = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.12, 0.14, 3.8, 12),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.8, roughness: 0.25 })
+  );
+  pillar.position.y = 2.2;
+  postGroup.add(pillar);
+
+  // Glowing crystal orb finial at top
+  const finialOrb = new THREE.Mesh(
+    new THREE.SphereGeometry(0.24, 12, 12),
+    new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 1.0 })
+  );
+  finialOrb.position.y = 4.2;
+  postGroup.add(finialOrb);
+
+  // 4 Directional Sign Plaques at different heights
+  const signConfigs: [string, 'left' | 'right' | 'up' | 'down', number, number][] = [
+    ['MENARA HOLOGRAM (35m)', 'up', 3.6, 0],
+    ['PUSAT KOMUNIKASI (28m)', 'left', 3.0, Math.PI / 2],
+    ['LORONG SINGKATAN (28m)', 'right', 2.4, -Math.PI / 2],
+    ['DATARAN MESEJ (Hab)', 'down', 1.8, Math.PI],
+  ];
+
+  signConfigs.forEach(([label, dir, heightY, rotY]) => {
+    const signTex = createDirectionSignTexture(label, dir);
+    const signMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.4, 0.65),
+      new THREE.MeshBasicMaterial({ map: signTex, side: THREE.DoubleSide })
+    );
+    signMesh.position.y = heightY;
+    signMesh.rotation.y = rotY;
+
+    // Small mounting bracket
+    const bracket = new THREE.Mesh(
+      new THREE.BoxGeometry(0.08, 0.08, 0.35),
+      new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.8 })
+    );
+    bracket.position.y = heightY;
+    bracket.rotation.y = rotY;
+
+    postGroup.add(signMesh);
+    postGroup.add(bracket);
+  });
+
+  return postGroup;
+}
+
+/**
+ * Creates the West Fantasy Bridge spanning across the canal to Pusat Komunikasi
+ */
+export function createWestFantasyBridge(): THREE.Group {
+  const bridgeGroup = new THREE.Group();
+  bridgeGroup.position.set(-19, 0, 8);
+
+  // Glowing Cyan Canal Water underneath
+  const canalWater = new THREE.Mesh(
+    new THREE.PlaneGeometry(10, 36),
+    new THREE.MeshStandardMaterial({
+      color: 0x0284c7,
+      emissive: 0x0369a1,
+      emissiveIntensity: 0.45,
+      roughness: 0.1,
+      metalness: 0.8,
+      transparent: true,
+      opacity: 0.88,
+    })
+  );
+  canalWater.rotation.x = -Math.PI / 2;
+  canalWater.position.set(0, 0.02, 0);
+  bridgeGroup.add(canalWater);
+
+  // Arched Stone Bridge Deck
+  const bridgeDeck = new THREE.Mesh(
+    new THREE.BoxGeometry(9.5, 0.4, 5.0),
+    new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.4, metalness: 0.5 })
+  );
+  bridgeDeck.position.y = 0.22;
+  bridgeGroup.add(bridgeDeck);
+
+  // Decorative Golden Runic Center Path
+  const bridgeRuneStrip = new THREE.Mesh(
+    new THREE.BoxGeometry(9.2, 0.04, 2.2),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xca8a04, emissiveIntensity: 0.6, roughness: 0.3 })
+  );
+  bridgeRuneStrip.position.y = 0.43;
+  bridgeGroup.add(bridgeRuneStrip);
+
+  // North & South Stone Balustrades with Glowing Cyan Runes
+  for (const zOffset of [-2.4, 2.4]) {
+    const balustrade = new THREE.Mesh(
+      new THREE.BoxGeometry(9.5, 0.85, 0.35),
+      new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.5 })
+    );
+    balustrade.position.set(0, 0.65, zOffset);
+    bridgeGroup.add(balustrade);
+
+    const runeBar = new THREE.Mesh(
+      new THREE.BoxGeometry(9.0, 0.12, 0.08),
+      new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.9 })
+    );
+    runeBar.position.set(0, 0.65, zOffset + (zOffset > 0 ? -0.18 : 0.18));
+    bridgeGroup.add(runeBar);
+
+    // 4 Corner Lantern Pedestals on Balustrades
+    for (const xOffset of [-4.5, 4.5]) {
+      const pedestal = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.28, 0.35, 1.3, 8),
+        new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.8, roughness: 0.3 })
+      );
+      pedestal.position.set(xOffset, 0.9, zOffset);
+      bridgeGroup.add(pedestal);
+
+      const lanternGlow = new THREE.Mesh(
+        new THREE.SphereGeometry(0.2, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xfef08a })
+      );
+      lanternGlow.position.set(xOffset, 1.6, zOffset);
+      bridgeGroup.add(lanternGlow);
+    }
+  }
+
+  // Welcome Arch at Bridge Entrance with Sign
+  const archSignTex = createDirectionSignTexture('PUSAT KOMUNIKASI (MISI 02)', 'left');
+  const bridgeArchSign = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.6, 0.9),
+    new THREE.MeshBasicMaterial({ map: archSignTex, side: THREE.DoubleSide })
+  );
+  bridgeArchSign.position.set(-4.5, 3.2, 0);
+  bridgeArchSign.rotation.y = Math.PI / 2;
+  bridgeGroup.add(bridgeArchSign);
+
+  return bridgeGroup;
+}
+
+/**
+ * Creates the full Pusat Komunikasi District at [-28, 0, 8]
+ */
+export function createPusatKomunikasiDistrict(): { group: THREE.Group; animatedList: AnimatedProp[] } {
+  const group = new THREE.Group();
+  group.position.set(-28, 0, 8);
+  const animatedList: AnimatedProp[] = [];
+
+  // 1. Polished Circular Courtyard with Cyan Wave Inlay
+  const courtyard = new THREE.Mesh(
+    new THREE.CylinderGeometry(10, 10.5, 0.25, 24),
+    new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.35, metalness: 0.6 })
+  );
+  courtyard.position.y = 0.12;
+  group.add(courtyard);
+
+  const innerCircle = new THREE.Mesh(
+    new THREE.RingGeometry(1, 8.5, 24),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.4 })
+  );
+  innerCircle.rotation.x = -Math.PI / 2;
+  innerCircle.position.y = 0.26;
+  group.add(innerCircle);
+
+  // 2. Central Satellite Relay Spire
+  const centralSpire = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.35, 0.8, 11, 10),
+    new THREE.MeshStandardMaterial({ color: 0x4338ca, metalness: 0.85, roughness: 0.25 })
+  );
+  centralSpire.position.set(0, 5.8, -4);
+  group.add(centralSpire);
+
+  // Satellite dish
+  const dish = new THREE.Mesh(
+    new THREE.SphereGeometry(1.6, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2.2),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.9, roughness: 0.2, side: THREE.DoubleSide })
+  );
+  dish.rotation.x = Math.PI / 3;
+  dish.position.set(0, 10.5, -4);
+  group.add(dish);
+
+  // 3. Giant Curved Message Screen
+  const screenCanvas = document.createElement('canvas');
+  screenCanvas.width = 1024;
+  screenCanvas.height = 512;
+  const sCtx = screenCanvas.getContext('2d');
+  if (sCtx) {
+    sCtx.fillStyle = '#0f172a';
+    sCtx.fillRect(0, 0, 1024, 512);
+
+    sCtx.strokeStyle = '#38bdf8';
+    sCtx.lineWidth = 6;
+    sCtx.strokeRect(10, 10, 1004, 492);
+
+    sCtx.fillStyle = '#facc15';
+    sCtx.font = '900 32px sans-serif';
+    sCtx.fillText('📱 PUSAT KOMUNIKASI & PESANAN DIGITAL', 40, 60);
+
+    // Message 1 (Polite to Teacher)
+    sCtx.fillStyle = '#1e293b';
+    sCtx.roundRect(40, 95, 944, 90, 18);
+    sCtx.fill();
+    sCtx.strokeStyle = '#34d399';
+    sCtx.lineWidth = 2.5;
+    sCtx.roundRect(40, 95, 944, 90, 18);
+    sCtx.stroke();
+
+    sCtx.fillStyle = '#34d399';
+    sCtx.font = 'bold 22px sans-serif';
+    sCtx.fillText('✔ Mesej Rasmi (Sesuai kepada Guru):', 60, 135);
+    sCtx.fillStyle = '#f8fafc';
+    sCtx.font = '20px sans-serif';
+    sCtx.fillText('"Selamat pagi, Cikgu. Bolehkah saya bertanya tentang tugasan Bahasa Melayu semalam?"', 60, 165);
+
+    // Message 2 (Casual warning)
+    sCtx.fillStyle = '#1e293b';
+    sCtx.roundRect(40, 205, 944, 90, 18);
+    sCtx.fill();
+    sCtx.strokeStyle = '#f43f5e';
+    sCtx.lineWidth = 2.5;
+    sCtx.roundRect(40, 205, 944, 90, 18);
+    sCtx.stroke();
+
+    sCtx.fillStyle = '#fb7185';
+    sCtx.font = 'bold 22px sans-serif';
+    sCtx.fillText('✖ Mesej Tidak Formal (Elakkan kepada Guru):', 60, 245);
+    sCtx.fillStyle = '#cbd5e1';
+    sCtx.font = '20px sans-serif';
+    sCtx.fillText('"Cikgu, hw semalam tu mcm mana? pening la..."', 60, 275);
+
+    // Activity Prompt
+    sCtx.fillStyle = '#38bdf8';
+    sCtx.font = 'bold 24px sans-serif';
+    sCtx.fillText('💬 Berbual dengan Adik Amir untuk membantu memilih mesej paling berhemah!', 60, 340);
+  }
+  const screenTex = new THREE.CanvasTexture(screenCanvas);
+  screenTex.colorSpace = THREE.SRGBColorSpace;
+
+  const curvedScreen = new THREE.Mesh(
+    new THREE.PlaneGeometry(6.8, 3.4),
+    new THREE.MeshBasicMaterial({ map: screenTex, side: THREE.DoubleSide })
+  );
+  curvedScreen.position.set(0, 3.6, -3.2);
+  group.add(curvedScreen);
+
+  // 4. Interactive Digital Mail Delivery Pod
+  const mailPod = new THREE.Mesh(
+    new THREE.BoxGeometry(2.4, 1.8, 1.5),
+    new THREE.MeshStandardMaterial({ color: 0x312e81, metalness: 0.7, roughness: 0.3 })
+  );
+  mailPod.position.set(3.8, 1.1, 1);
+  group.add(mailPod);
+
+  // Glowing Holographic Mail Symbol
+  const mailGlow = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.4, 0.9),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.9 })
+  );
+  mailGlow.position.set(3.8, 2.5, 1);
+  group.add(mailGlow);
+
+  // 5. Floating Message Bubbles around courtyard
+  for (let i = 0; i < 4; i++) {
+    const bubble = new THREE.Mesh(
+      new THREE.SphereGeometry(0.35, 10, 10),
+      new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0x38bdf8 : 0xa855f7, transparent: true, opacity: 0.75 })
+    );
+    const ang = (i / 4) * Math.PI * 2;
+    const r = 5.2;
+    bubble.position.set(Math.cos(ang) * r, 2.8, Math.sin(ang) * r);
+    group.add(bubble);
+
+    animatedList.push({
+      mesh: bubble,
+      update: (t) => {
+        bubble.position.y = 2.8 + Math.sin(t * 2 + i) * 0.35;
+      },
+    });
+  }
+
+  // 6. District Gateway Arch with Name Sign
+  const archGroup = new THREE.Group();
+  archGroup.position.set(7.5, 0, 0);
+  archGroup.rotation.y = Math.PI / 2;
+
+  const archPillarL = new THREE.Mesh(
+    new THREE.BoxGeometry(0.6, 4.2, 0.6),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  archPillarL.position.set(-2.2, 2.1, 0);
+  archGroup.add(archPillarL);
+
+  const archPillarR = new THREE.Mesh(
+    new THREE.BoxGeometry(0.6, 4.2, 0.6),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  archPillarR.position.set(2.2, 2.1, 0);
+  archGroup.add(archPillarR);
+
+  const archTop = new THREE.Mesh(
+    new THREE.BoxGeometry(5.2, 0.65, 0.6),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  archTop.position.set(0, 4.4, 0);
+  archGroup.add(archTop);
+
+  const signTex = createDirectionSignTexture('PUSAT KOMUNIKASI', 'up');
+  const signMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.6, 0.85),
+    new THREE.MeshBasicMaterial({ map: signTex, side: THREE.DoubleSide })
+  );
+  signMesh.position.set(0, 3.5, 0);
+  archGroup.add(signMesh);
+
+  group.add(archGroup);
+
+  return { group, animatedList };
+}
+
+/**
+ * Creates the East Sakura Garden and Promenade leading to Lorong Singkatan
+ */
+export function createEastSakuraGardenAndPromenade(): THREE.Group {
+  const gardenGroup = new THREE.Group();
+  gardenGroup.position.set(19, 0, 10);
+
+  // Marble Street Pathway (Walkable from x = 14 to x = 24)
+  const streetMesh = new THREE.Mesh(
+    new THREE.BoxGeometry(10, 0.08, 4.8),
+    new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.35, metalness: 0.4 })
+  );
+  streetMesh.position.y = 0.04;
+  gardenGroup.add(streetMesh);
+
+  // Golden Inlay Lines
+  for (const zOffset of [-2.2, 2.2]) {
+    const goldLine = new THREE.Mesh(
+      new THREE.BoxGeometry(9.8, 0.04, 0.15),
+      new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.9 })
+    );
+    goldLine.position.set(0, 0.09, zOffset);
+    gardenGroup.add(goldLine);
+  }
+
+  // Sakura Trees along Garden Promenade
+  const sakuraOffsets = [
+    [-3.5, -3.4],
+    [3.5, -3.4],
+    [-3.5, 3.4],
+    [3.5, 3.4],
+  ];
+
+  sakuraOffsets.forEach(([sx, sz]) => {
+    const tree = createSakuraTree();
+    tree.position.set(sx, 0, sz);
+    gardenGroup.add(tree);
+
+    // Stone Garden Bench
+    const bench = new THREE.Mesh(
+      new THREE.BoxGeometry(1.6, 0.45, 0.5),
+      new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.7 })
+    );
+    bench.position.set(sx, 0.22, sz > 0 ? sz - 1.2 : sz + 1.2);
+    gardenGroup.add(bench);
+  });
+
+  // Welcome Arch into Lorong Singkatan
+  const archSignTex = createDirectionSignTexture('LORONG SINGKATAN (MISI 03)', 'right');
+  const gardenArchSign = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.6, 0.9),
+    new THREE.MeshBasicMaterial({ map: archSignTex, side: THREE.DoubleSide })
+  );
+  gardenArchSign.position.set(4.5, 3.2, 0);
+  gardenArchSign.rotation.y = -Math.PI / 2;
+  gardenGroup.add(gardenArchSign);
+
+  return gardenGroup;
+}
+
+/**
+ * Creates the Cyberpunk Lorong Singkatan District at [28, 0, 10]
+ */
+export function createLorongSingkatanDistrict(): { group: THREE.Group; animatedList: AnimatedProp[] } {
+  const group = new THREE.Group();
+  group.position.set(28, 0, 10);
+  const animatedList: AnimatedProp[] = [];
+
+  // 1. Street paving
+  const streetPaving = new THREE.Mesh(
+    new THREE.BoxGeometry(14, 0.1, 14),
+    new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.7, metalness: 0.3 })
+  );
+  streetPaving.position.y = 0.05;
+  group.add(streetPaving);
+
+  // 2. Gateway Arch
+  const gatewayArch = new THREE.Group();
+  gatewayArch.position.set(-6, 0, 0);
+  gatewayArch.rotation.y = -Math.PI / 2;
+
+  const pillarL = new THREE.Mesh(
+    new THREE.BoxGeometry(0.7, 4.5, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.7 })
+  );
+  pillarL.position.set(-2.5, 2.25, 0);
+  gatewayArch.add(pillarL);
+
+  const pillarR = new THREE.Mesh(
+    new THREE.BoxGeometry(0.7, 4.5, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.7 })
+  );
+  pillarR.position.set(2.5, 2.25, 0);
+  gatewayArch.add(pillarR);
+
+  const topBeam = new THREE.Mesh(
+    new THREE.BoxGeometry(5.8, 0.7, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.7 })
+  );
+  topBeam.position.set(0, 4.7, 0);
+  gatewayArch.add(topBeam);
+
+  const mainSignTex = createDirectionSignTexture('LORONG SINGKATAN', 'up');
+  const mainSign = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.0, 1.0),
+    new THREE.MeshBasicMaterial({ map: mainSignTex, side: THREE.DoubleSide })
+  );
+  mainSign.position.set(0, 3.6, 0);
+  gatewayArch.add(mainSign);
+
+  group.add(gatewayArch);
+
+  // 3. Four Holographic Decode Billboards along Alley Walls
+  const billboardsData = [
+    { acronym: 'TBH', baku: 'SEBENARNYA', note: 'To Be Honest', x: -3.5, z: -4.8, rotY: 0 },
+    { acronym: 'BRB', baku: 'AKAN KEMBALI', note: 'Be Right Back', x: 3.5, z: -4.8, rotY: 0 },
+    { acronym: 'ASAP', baku: 'SEGERA', note: 'As Soon As Possible', x: -3.5, z: 4.8, rotY: Math.PI },
+    { acronym: 'IDK', baku: 'TIDAK TAHU', note: 'I Do Not Know', x: 3.5, z: 4.8, rotY: Math.PI },
+  ];
+
+  billboardsData.forEach((bData, idx) => {
+    const bbTex = createAcronymBillboardTexture(bData.acronym, bData.baku, bData.note);
+    const bbMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.6, 2.0),
+      new THREE.MeshBasicMaterial({ map: bbTex, side: THREE.DoubleSide })
+    );
+    bbMesh.position.set(bData.x, 2.8, bData.z);
+    bbMesh.rotation.y = bData.rotY;
+    group.add(bbMesh);
+
+    // Pillar stand
+    const stand = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.12, 0.12, 2.8, 8),
+      new THREE.MeshStandardMaterial({ color: 0x06b6d4, metalness: 0.8 })
+    );
+    stand.position.set(bData.x, 1.4, bData.z);
+    group.add(stand);
+
+    animatedList.push({
+      mesh: bbMesh,
+      update: (t) => {
+        bbMesh.position.y = 2.8 + Math.sin(t * 2 + idx) * 0.1;
+      },
+    });
+  });
+
+  // 4. Central Decode Terminal Pod for Detektif Siber
+  const decodePod = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.6, 1.9, 0.8, 12),
+    new THREE.MeshStandardMaterial({ color: 0x1e1b4b, metalness: 0.8, roughness: 0.3 })
+  );
+  decodePod.position.set(0, 0.4, 0);
+  group.add(decodePod);
+
+  const hologramPillar = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.3, 3.2, 12),
+    new THREE.MeshStandardMaterial({
+      color: 0x22d3ee,
+      emissive: 0x0891b2,
+      emissiveIntensity: 0.9,
+      transparent: true,
+      opacity: 0.85,
+    })
+  );
+  hologramPillar.position.set(0, 2.2, 0);
+  group.add(hologramPillar);
+
+  // Floating rotating ring
+  const decodeRing = new THREE.Mesh(
+    new THREE.TorusGeometry(1.2, 0.08, 8, 24),
+    new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
+  );
+  decodeRing.position.set(0, 2.5, 0);
+  decodeRing.rotation.x = Math.PI / 2;
+  group.add(decodeRing);
+
+  animatedList.push({
+    mesh: decodeRing,
+    update: (t) => {
+      decodeRing.rotation.z = t * 1.8;
+      decodeRing.position.y = 2.5 + Math.sin(t * 3) * 0.15;
+    },
+  });
+
+  return { group, animatedList };
+}
+
+/**
+ * Creates the Grand Menara Hologram District at [0, 0, -32]
+ */
+export function createMenaraHologramDistrict(): { group: THREE.Group; animatedList: AnimatedProp[] } {
+  const group = new THREE.Group();
+  group.position.set(0, 0, -32);
+  const animatedList: AnimatedProp[] = [];
+
+  // 1. Grand Elevated Circular Royal Platform
+  const platform = new THREE.Mesh(
+    new THREE.CylinderGeometry(12, 13, 0.5, 32),
+    new THREE.MeshStandardMaterial({ color: 0x1e1b4b, roughness: 0.3, metalness: 0.7 })
+  );
+  platform.position.y = 0.25;
+  group.add(platform);
+
+  const concentricRing = new THREE.Mesh(
+    new THREE.RingGeometry(2, 11, 32),
+    new THREE.MeshBasicMaterial({ color: 0xfacc15, side: THREE.DoubleSide, transparent: true, opacity: 0.45 })
+  );
+  concentricRing.rotation.x = -Math.PI / 2;
+  concentricRing.position.y = 0.51;
+  group.add(concentricRing);
+
+  // 2. Colossal 35-Meter Spire Core
+  const spireBase = new THREE.Mesh(
+    new THREE.CylinderGeometry(3.8, 4.6, 3.2, 16),
+    new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.25, metalness: 0.85 })
+  );
+  spireBase.position.y = 2.1;
+  group.add(spireBase);
+
+  const mainShaft = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.8, 2.2, 32, 16),
+    new THREE.MeshStandardMaterial({ color: 0x4f46e5, metalness: 0.8, roughness: 0.2 })
+  );
+  mainShaft.position.y = 18;
+  group.add(mainShaft);
+
+  // Spire Glowing Tip
+  const spireTip = new THREE.Mesh(
+    new THREE.ConeGeometry(0.8, 6.0, 12),
+    new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 1.2 })
+  );
+  spireTip.position.y = 37;
+  group.add(spireTip);
+
+  // 3. Rotating Celestial Energy Rings at different elevations
+  const ringElevations = [12, 20, 28];
+  ringElevations.forEach((h, idx) => {
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(3.6 - idx * 0.8, 0.15, 12, 32),
+      new THREE.MeshBasicMaterial({ color: idx % 2 === 0 ? 0x38bdf8 : 0xfacc15 })
+    );
+    ring.position.y = h;
+    ring.rotation.x = Math.PI / 2;
+    group.add(ring);
+
+    animatedList.push({
+      mesh: ring,
+      update: (t) => {
+        ring.rotation.z = t * (idx % 2 === 0 ? 1.2 : -1.0);
+        ring.position.y = h + Math.sin(t * 2 + idx) * 0.3;
+      },
+    });
+  });
+
+  // 4. Giant 10-Meter Curved Broadcast Billboard
+  const bTex = createBroadcastBillboardTexture();
+  const broadcastScreen = new THREE.Mesh(
+    new THREE.PlaneGeometry(10.5, 5.2),
+    new THREE.MeshBasicMaterial({ map: bTex, side: THREE.DoubleSide })
+  );
+  broadcastScreen.position.set(0, 14, 2.8);
+  group.add(broadcastScreen);
+
+  // 5. Broadcast Horns / Transmitters
+  for (const ang of [-Math.PI / 4, Math.PI / 4]) {
+    const horn = new THREE.Mesh(
+      new THREE.ConeGeometry(0.6, 1.8, 8),
+      new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.9 })
+    );
+    horn.rotation.x = Math.PI / 2;
+    horn.rotation.y = ang;
+    horn.position.set(Math.sin(ang) * 2.2, 18, Math.cos(ang) * 2.2);
+    group.add(horn);
+  }
+
+  // 6. District Gateway Arch facing South towards Dataran Mesej
+  const archGroup = new THREE.Group();
+  archGroup.position.set(0, 0, 10);
+
+  const pillarL = new THREE.Mesh(
+    new THREE.BoxGeometry(0.7, 4.5, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  pillarL.position.set(-3.2, 2.25, 0);
+  archGroup.add(pillarL);
+
+  const pillarR = new THREE.Mesh(
+    new THREE.BoxGeometry(0.7, 4.5, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  pillarR.position.set(3.2, 2.25, 0);
+  archGroup.add(pillarR);
+
+  const archTop = new THREE.Mesh(
+    new THREE.BoxGeometry(7.2, 0.7, 0.7),
+    new THREE.MeshStandardMaterial({ color: 0xfacc15, metalness: 0.85 })
+  );
+  archTop.position.set(0, 4.7, 0);
+  archGroup.add(archTop);
+
+  const signTex = createDirectionSignTexture('MENARA HOLOGRAM', 'up');
+  const signMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.2, 0.95),
+    new THREE.MeshBasicMaterial({ map: signTex, side: THREE.DoubleSide })
+  );
+  signMesh.position.set(0, 3.6, 0);
+  archGroup.add(signMesh);
+
+  group.add(archGroup);
+
+  return { group, animatedList };
+}
+
+/**
+ * Returns solid collision boxes for Kota Media Sosial (expanded semi-open world)
+ * Carefully configured so all 4 districts and their connecting bridges/avenues are 100% walkable!
  */
 export function getKotaMediaColliders(): CollisionBox[] {
   return [
-    // North Palace back wall
-    { minX: -26, maxX: 26, minZ: -45, maxZ: -23 },
-    // West Colonnade back arcade
-    { minX: -28, maxX: -17, minZ: -24, maxZ: 18 },
-    // East Colonnade back arcade
-    { minX: 17, maxX: 28, minZ: -24, maxZ: 18 },
-    // Central Pavilion fountain core
-    { minX: -3.8, maxX: 3.8, minZ: -15.8, maxZ: -8.2 },
-    // South boundary
-    { minX: -35, maxX: 35, minZ: 26, maxZ: 45 },
+    // 1. Central Pavilion Fountain Core (walkable all around)
+    { minX: -3.6, maxX: 3.6, minZ: -14.8, maxZ: -9.2 },
+
+    // 2. West Colonnade North Wing (leaves Bridge at z: 6 to 10 open!)
+    { minX: -26, maxX: -16, minZ: -24, maxZ: 5 },
+    // 2b. West Colonnade South Wing (leaves Bridge at z: 6 to 10 open!)
+    { minX: -26, maxX: -16, minZ: 11, maxZ: 24 },
+
+    // 3. East Colonnade North Wing (leaves Sakura Avenue at z: 7 to 13 open!)
+    { minX: 16, maxX: 26, minZ: -24, maxZ: 6 },
+    // 3b. East Colonnade South Wing (leaves Sakura Avenue at z: 7 to 13 open!)
+    { minX: 16, maxX: 26, minZ: 14, maxZ: 24 },
+
+    // 4. North Palace Spire Core Base (leaves Royal Avenue at x: -6 to 6 open!)
+    { minX: -3.8, maxX: 3.8, minZ: -35.5, maxZ: -32.5 },
+
+    // 5. West Canal Water barriers (North & South of bridge)
+    { minX: -24, maxX: -14, minZ: -22, maxZ: 5.5 },
+    { minX: -24, maxX: -14, minZ: 10.5, maxZ: 24 },
+
+    // 6. Outer World Solid Perimeter Boundaries (Expanded to 54m)
+    { minX: -65, maxX: 65, minZ: -65, maxZ: -48 }, // North outer boundary
+    { minX: -65, maxX: 65, minZ: 38, maxZ: 65 },   // South outer boundary
+    { minX: -65, maxX: -44, minZ: -65, maxZ: 65 }, // West outer boundary
+    { minX: 44, maxX: 65, minZ: -65, maxZ: 65 },  // East outer boundary
   ];
 }
+
